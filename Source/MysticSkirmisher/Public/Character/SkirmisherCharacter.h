@@ -16,4 +16,10 @@ class MYSTICSKIRMISHER_API ASkirmisherCharacter : public ASkirmisherCharacterBas
 public:
 	ASkirmisherCharacter();
 
+    virtual void PossessedBy(AController *NewController) override;
+    virtual void OnRep_PlayerState() override;
+
+private:
+	void InitAbilityActorInfo();
+
 };

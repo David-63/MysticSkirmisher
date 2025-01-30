@@ -12,7 +12,7 @@ ASkirmisherState::ASkirmisherState()
 
     AbilitySystemComponent = CreateDefaultSubobject<USkirmisherAbilitySystemComponent>("AbilitySystemComponent");
     AbilitySystemComponent->SetIsReplicated(true);
-
+    AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
     AttributeSet = CreateDefaultSubobject<USkirmisherAttributeSet>("AttributeSet");
 }
 

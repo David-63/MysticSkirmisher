@@ -12,9 +12,15 @@ ASkirmisherEnemy::ASkirmisherEnemy()
 
     AbilitySystemComponent = CreateDefaultSubobject<USkirmisherAbilitySystemComponent>("AbilitySystemComponent");
     AbilitySystemComponent->SetIsReplicated(true);
+    AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
     AttributeSet = CreateDefaultSubobject<USkirmisherAttributeSet>("AttributeSet");
+}
 
+void ASkirmisherEnemy::BeginPlay()
+{
+    Super::BeginPlay();
+    AbilitySystemComponent->InitAbilityActorInfo(this, this);
 }
 
 void ASkirmisherEnemy::HighlightActor()

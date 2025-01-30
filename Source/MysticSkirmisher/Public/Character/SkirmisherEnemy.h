@@ -17,6 +17,10 @@ class MYSTICSKIRMISHER_API ASkirmisherEnemy : public ASkirmisherCharacterBase, p
 public:
 	ASkirmisherEnemy();
 	
+protected:
+	virtual void BeginPlay() override;
+
+public:
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
 };
