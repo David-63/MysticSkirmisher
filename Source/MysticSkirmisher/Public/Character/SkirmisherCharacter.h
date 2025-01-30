@@ -13,5 +13,7 @@ UCLASS()
 class MYSTICSKIRMISHER_API ASkirmisherCharacter : public ASkirmisherCharacterBase
 {
 	GENERATED_BODY()
-	
+public:
+	ASkirmisherCharacter();
+
 };
