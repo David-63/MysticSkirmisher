@@ -3,10 +3,18 @@
 
 #include "Character/SkirmisherEnemy.h"
 #include "MysticSkirmisher/MysticSkirmisher.h"
+#include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
+#include "AbilitySystem/SkirmisherAttributeSet.h"
 
 ASkirmisherEnemy::ASkirmisherEnemy()
 {
     GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+
+    AbilitySystemComponent = CreateDefaultSubobject<USkirmisherAbilitySystemComponent>("AbilitySystemComponent");
+    AbilitySystemComponent->SetIsReplicated(true);
+
+    AttributeSet = CreateDefaultSubobject<USkirmisherAttributeSet>("AttributeSet");
+
 }
 
 void ASkirmisherEnemy::HighlightActor()

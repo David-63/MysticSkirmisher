@@ -12,6 +12,11 @@ ASkirmisherCharacterBase::ASkirmisherCharacterBase()
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+UAbilitySystemComponent * ASkirmisherCharacterBase::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
 void ASkirmisherCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
