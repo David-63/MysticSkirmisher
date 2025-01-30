@@ -9,6 +9,7 @@
 
 class UInputMappingContext;
 class UInputAction;
+class IEnemyInterface;
 /**
  * 
  */
@@ -23,6 +24,8 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
+public:
+	virtual void PlayerTick(float DeltaTime) override;
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Input")
@@ -31,5 +34,10 @@ private:
 	TObjectPtr<UInputAction> IA_Move;
 
 	void ActionMove(const struct FInputActionValue& InputValue);
-	
+
+	void CursorTrace();
+	TScriptInterface<IEnemyInterface> LastActor;
+	TScriptInterface<IEnemyInterface> ThisActor;
+
+
 };

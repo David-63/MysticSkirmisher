@@ -4,14 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "Character/SkirmisherCharacterBase.h"
+#include "Interaction/EnemyInterface.h"
 #include "SkirmisherEnemy.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class MYSTICSKIRMISHER_API ASkirmisherEnemy : public ASkirmisherCharacterBase
+class MYSTICSKIRMISHER_API ASkirmisherEnemy : public ASkirmisherCharacterBase, public IEnemyInterface
 {
 	GENERATED_BODY()
+public:
+	ASkirmisherEnemy();
 	
+	virtual void HighlightActor() override;
+	virtual void UnHighlightActor() override;
 };
