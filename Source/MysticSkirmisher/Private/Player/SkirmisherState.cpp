@@ -16,7 +16,7 @@ ASkirmisherState::ASkirmisherState()
     AttributeSet = CreateDefaultSubobject<USkirmisherAttributeSet>("AttributeSet");
 }
 
-UAbilitySystemComponent * ASkirmisherState::GetAbilitySystemComponent() const
+UAbilitySystemComponent* ASkirmisherState::GetAbilitySystemComponent() const
 {
     return AbilitySystemComponent;
 }
