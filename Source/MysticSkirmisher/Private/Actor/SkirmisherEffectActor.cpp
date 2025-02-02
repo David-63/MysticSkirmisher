@@ -26,7 +26,8 @@ void ASkirmisherEffectActor::BeginOverlap(UPrimitiveComponent* OverlappedCompone
 		const USkirmisherAttributeSet* attributeSet = Cast<USkirmisherAttributeSet>(ASInterface->GetAbilitySystemComponent()->GetAttributeSet(USkirmisherAttributeSet::StaticClass()));
 		USkirmisherAttributeSet* mutableAttributeSet = const_cast<USkirmisherAttributeSet*>(attributeSet);
 		
-		mutableAttributeSet->SetHealth(attributeSet->GetHealth() + 25.f);
+		mutableAttributeSet->SetHealth(attributeSet->GetHealth() + 10.f);
+		mutableAttributeSet->SetMana(attributeSet->GetMana() + 10.f);
 		Destroy();
 	}
 }

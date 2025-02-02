@@ -6,10 +6,10 @@
 
 USkirmisherAttributeSet::USkirmisherAttributeSet()
 {
-    InitHealth(50.f);
-    InitHealthMax(100.f);
-    InitMana(100.f);
-    InitManaMax(100.f);
+    InitHealth(20.f);
+    InitHealthMax(60.f);
+    InitMana(10.f);
+    InitManaMax(40.f);
 }
 
 void USkirmisherAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
