@@ -12,6 +12,7 @@ UOverlayWidgetController *ASkirmisherHUD::GetOverlayWidgetController(const FWidg
     {
         OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
         OverlayWidgetController->SetWidgetControllerParams(WCParams);
+        OverlayWidgetController->BindCallbacksToDependencies();
     }
     return OverlayWidgetController;
 }

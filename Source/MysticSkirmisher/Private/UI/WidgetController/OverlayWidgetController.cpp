@@ -4,9 +4,27 @@
 #include "UI/WidgetController/OverlayWidgetController.h"
 #include "AbilitySystem/SkirmisherAttributeSet.h"
 
+
 void UOverlayWidgetController::BroadcastInitialValues()
 {
-    const USkirmisherAttributeSet* skirmisherAttributeSet = CastChecked<USkirmisherAttributeSet>(AttributeSet);    
+    const USkirmisherAttributeSet* skirmisherAttributeSet = CastChecked<USkirmisherAttributeSet>(AttributeSet);
     OnHealthChanged.Broadcast(skirmisherAttributeSet->GetHealth());
     OnHealthMaxChanged.Broadcast(skirmisherAttributeSet->GetHealthMax());
+}
+
+void UOverlayWidgetController::BindCallbacksToDependencies()
+{
+    const USkirmisherAttributeSet* skirmisherAttributeSet = CastChecked<USkirmisherAttributeSet>(AttributeSet);
+
+    AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetHealthAttribute()).AddUObject(this, &ThisClass::HealthChanged);
+    AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetHealthMaxAttribute()).AddUObject(this, &ThisClass::HealthMaxChanged);
+}
+void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData &Data) const
+{
+    OnHealthChanged.Broadcast(Data.NewValue);
+}
+
+void UOverlayWidgetController::HealthMaxChanged(const FOnAttributeChangeData & Data) const
+{
+    OnHealthMaxChanged.Broadcast(Data.NewValue);
 }

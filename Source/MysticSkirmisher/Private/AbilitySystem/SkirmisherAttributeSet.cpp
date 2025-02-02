@@ -6,7 +6,7 @@
 
 USkirmisherAttributeSet::USkirmisherAttributeSet()
 {
-    InitHealth(100.f);
+    InitHealth(50.f);
     InitHealthMax(100.f);
     InitMana(100.f);
     InitManaMax(100.f);

@@ -12,6 +12,8 @@ void USkirmisherWidgetController::SetWidgetControllerParams(const FWidgetControl
     AttributeSet = WCParams.AttributeSet;
 }
 void USkirmisherWidgetController::BroadcastInitialValues()
+{    
+}
+void USkirmisherWidgetController::BindCallbacksToDependencies()
 {
-    
 }
