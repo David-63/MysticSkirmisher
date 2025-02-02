@@ -15,11 +15,11 @@ void ASkirmisherController::BeginPlay()
 {
     Super::BeginPlay();
     check(InputContext);
-    UEnhancedInputLocalPlayerSubsystem* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-        
-    check(subsystem);
-    subsystem->AddMappingContext(InputContext, 0);
-
+    if (UEnhancedInputLocalPlayerSubsystem* subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+    {
+        subsystem->AddMappingContext(InputContext, 0);
+    }
+    
     bShowMouseCursor = true;
     DefaultMouseCursor = EMouseCursor::Default;
 

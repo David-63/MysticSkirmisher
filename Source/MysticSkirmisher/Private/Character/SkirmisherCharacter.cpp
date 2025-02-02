@@ -4,8 +4,10 @@
 #include "Character/SkirmisherCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/SkirmisherState.h"
+#include "Player/SkirmisherController.h"
 #include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 #include "AbilitySystem/SkirmisherAttributeSet.h"
+#include "UI/HUD/SkirmisherHUD.h"
 
 
 ASkirmisherCharacter::ASkirmisherCharacter()
@@ -39,4 +41,14 @@ void ASkirmisherCharacter::InitAbilityActorInfo()
     check(skirmisherState);
     skirmisherState->GetAbilitySystemComponent()->InitAbilityActorInfo(skirmisherState, this);
     AbilitySystemComponent = skirmisherState->GetAbilitySystemComponent();
+    AttributeSet = skirmisherState->GetAttributeSet();
+ 
+    if (ASkirmisherController* playerController = Cast<ASkirmisherController>(GetController()))
+    {
+        if (ASkirmisherHUD* skirmisherHUD = Cast<ASkirmisherHUD>(playerController->GetHUD()))
+        {
+            skirmisherHUD->InitOverlay(playerController, skirmisherState, AbilitySystemComponent, AttributeSet);
+        }
+    }    
+
 }
