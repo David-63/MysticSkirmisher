@@ -22,10 +22,13 @@ void ASkirmisherHUD::InitOverlay(APlayerController * PC, APlayerState * PS, UAbi
 
     UUserWidget* widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
     OverlayWidget = Cast<USkirmisherUserWidget>(widget);
+    
     const FWidgetControllerParams widgetControllerParams(PC, PS, ASC, AS);
     UOverlayWidgetController* overlayWidgetController = GetOverlayWidgetController(widgetControllerParams);
-    OverlayWidget->SetWidgetController(overlayWidgetController);
     
+    OverlayWidget->SetWidgetController(overlayWidgetController);
+    overlayWidgetController->BroadcastInitialValues();
+
     widget->AddToViewport();
 
 }

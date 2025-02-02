@@ -11,3 +11,7 @@ void USkirmisherWidgetController::SetWidgetControllerParams(const FWidgetControl
     AbilitySystemComponent = WCParams.AbilitySystemComponent;
     AttributeSet = WCParams.AttributeSet;
 }
+void USkirmisherWidgetController::BroadcastInitialValues()
+{
+    
+}
