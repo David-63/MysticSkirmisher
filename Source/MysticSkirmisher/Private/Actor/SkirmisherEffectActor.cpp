@@ -21,9 +21,9 @@ void ASkirmisherEffectActor::BeginPlay()
 	Super::BeginPlay();
 }
 
-void ASkirmisherEffectActor::ApplyEffectToTarget(AActor *Target, TSubclassOf<UGameplayEffect> GameplayEffectClass)
+void ASkirmisherEffectActor::ApplyEffectToTarget(AActor *TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass)
 {
-	UAbilitySystemComponent* targetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Target);
+	UAbilitySystemComponent* targetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if (targetASC == nullptr) return;
 	check(GameplayEffectClass);
 
