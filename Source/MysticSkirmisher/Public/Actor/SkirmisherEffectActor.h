@@ -25,7 +25,7 @@ enum class EEffectRemovalPolicy : uint8
 };
 
 USTRUCT(BlueprintType)
-struct FDurationPolicyType_GE
+struct FGameplayEffectPolicySet
 {
 	GENERATED_BODY()
 public:
@@ -51,7 +51,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
-	void ApplyEffectToTarget(AActor* TargetActor, FDurationPolicyType_GE GameplayEffect);
+	void ApplyEffectToTarget(AActor* TargetActor, FGameplayEffectPolicySet GameplayEffect);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	bool bDestroyOnEffectRemoval = false;
@@ -65,5 +65,5 @@ protected:
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
-	TArray<FDurationPolicyType_GE> DurationPolicy_GE;
+	TArray<FGameplayEffectPolicySet> GameplayEffectPolicySet;
 };

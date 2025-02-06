@@ -41,7 +41,7 @@ public:
 	AController* TargetController = nullptr;
 	UPROPERTY()
 	ACharacter* TargetCharacter = nullptr;
-}
+};
 
 /**
  * 
@@ -82,5 +82,5 @@ public:
 
 	
 private:
-	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const
+	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
 };
