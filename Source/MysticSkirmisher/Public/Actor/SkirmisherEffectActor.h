@@ -37,6 +37,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<UGameplayEffect> GameplayEffectClass = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	float ActorLevel = 1.f;
 };
 
 UCLASS()

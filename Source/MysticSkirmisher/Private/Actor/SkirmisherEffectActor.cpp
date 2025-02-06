@@ -32,7 +32,7 @@ void ASkirmisherEffectActor::ApplyEffectToTarget(AActor *TargetActor, FGameplayE
 	FGameplayEffectContextHandle effectcontextHandle = targetASC->MakeEffectContext();
 	effectcontextHandle.AddSourceObject(this);
 
-	const FGameplayEffectSpecHandle effectSpec = targetASC->MakeOutgoingSpec(GameplayEffect.GameplayEffectClass, 1.f, effectcontextHandle);
+	const FGameplayEffectSpecHandle effectSpec = targetASC->MakeOutgoingSpec(GameplayEffect.GameplayEffectClass, GameplayEffect.ActorLevel, effectcontextHandle);
 	
 	const FActiveGameplayEffectHandle activeEffectHandle = targetASC->ApplyGameplayEffectSpecToSelf(*effectSpec.Data.Get());
 	
