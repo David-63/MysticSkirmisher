@@ -21,7 +21,7 @@ void ASkirmisherEffectActor::BeginPlay()
 	Super::BeginPlay();
 }
 
-void ASkirmisherEffectActor::ApplyEffectToTarget(AActor *TargetActor, FDurationPolicyType_GE GameplayEffect)
+void ASkirmisherEffectActor::ApplyEffectToTarget(AActor *TargetActor, FGameplayEffectPolicySet GameplayEffect)
 {
 	UAbilitySystemComponent* targetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	if (targetASC == nullptr) return;
@@ -40,16 +40,15 @@ void ASkirmisherEffectActor::ApplyEffectToTarget(AActor *TargetActor, FDurationP
 
 	if (bIsInfinite && GameplayEffect.EffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Add Queue"));
 		ActiveEffectHandles.Add(activeEffectHandle, targetASC);
 	}
 }
 
 void ASkirmisherEffectActor::OnBeginOverlap(AActor *TargetActor)
 {
-	if (!DurationPolicy_GE.IsEmpty())
+	if (!GameplayEffectPolicySet.IsEmpty())
 	{
-		for (FDurationPolicyType_GE& gameplayEffectClass : DurationPolicy_GE)
+		for (FGameplayEffectPolicySet& gameplayEffectClass : GameplayEffectPolicySet)
 		{
 			if (gameplayEffectClass.EffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnBeginOverlap)
 			{
@@ -61,9 +60,9 @@ void ASkirmisherEffectActor::OnBeginOverlap(AActor *TargetActor)
 
 void ASkirmisherEffectActor::OnEndOverlap(AActor *TargetActor)
 {
-	if (!DurationPolicy_GE.IsEmpty())
+	if (!GameplayEffectPolicySet.IsEmpty())
 	{
-		for (FDurationPolicyType_GE& gameplayEffectClass : DurationPolicy_GE)
+		for (FGameplayEffectPolicySet& gameplayEffectClass : GameplayEffectPolicySet)
 		{
 			if (gameplayEffectClass.EffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnEndOverlap)
 			{
