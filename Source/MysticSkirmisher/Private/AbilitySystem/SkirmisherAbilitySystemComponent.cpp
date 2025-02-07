@@ -10,5 +10,7 @@ void USkirmisherAbilitySystemComponent::AbilityActorInfoSet()
 
 void USkirmisherAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
-    GEngine->AddOnScreenDebugMessage(1, 2.f, FColor::Cyan, FString("Effect Applied"));
+    FGameplayTagContainer tagContainer;
+    EffectSpec.GetAllAssetTags(tagContainer);
+    EffectAssetTags.Broadcast(tagContainer);
 }

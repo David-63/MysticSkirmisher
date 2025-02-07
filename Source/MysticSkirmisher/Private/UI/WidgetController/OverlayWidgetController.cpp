@@ -3,6 +3,7 @@
 
 #include "UI/WidgetController/OverlayWidgetController.h"
 #include "AbilitySystem/SkirmisherAttributeSet.h"
+#include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 
 
 
@@ -23,6 +24,18 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
     AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetHealthMaxAttribute()).AddUObject(this, &ThisClass::HealthMaxChanged);
     AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetManaAttribute()).AddUObject(this, &ThisClass::ManaChanged);
     AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetManaMaxAttribute()).AddUObject(this, &ThisClass::ManaMaxChanged);
+
+    Cast<USkirmisherAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda
+    (
+        [](const FGameplayTagContainer& AssetTags)
+        {
+            for (const FGameplayTag& tag : AssetTags)
+            {
+                const FString msg = FString::Printf(TEXT("GE Tag: %s"), *tag.ToString());
+                GEngine->AddOnScreenDebugMessage(-1, 0.3f, FColor::Green, msg);
+            }
+        }
+    );
 }
 void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData &Data) const
 {

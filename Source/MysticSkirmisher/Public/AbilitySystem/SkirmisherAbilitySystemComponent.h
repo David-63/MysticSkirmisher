@@ -6,6 +6,8 @@
 #include "AbilitySystemComponent.h"
 #include "SkirmisherAbilitySystemComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer& /*AssetTags*/);
+
 /**
  * 
  */
@@ -14,10 +16,11 @@ class MYSTICSKIRMISHER_API USkirmisherAbilitySystemComponent : public UAbilitySy
 {
 	GENERATED_BODY()
 public:
-	// 자신에게 적용되는 이팩트를 델리게이트로 등록
 	void AbilityActorInfoSet();
-	
+
 protected:
 	void EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle);
 
+public:
+	FEffectAssetTags EffectAssetTags;
 };
