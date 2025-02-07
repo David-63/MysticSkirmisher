@@ -80,6 +80,14 @@ void USkirmisherAttributeSet::PostGameplayEffectExecute(const FGameplayEffectMod
     FEffectProperties props;
     SetEffectProperties(Data, props);
     
+    if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+    {
+        SetHealth(FMath::Clamp(GetHealth(), 0.f, GetHealthMax()));
+    }
+    if (Data.EvaluatedData.Attribute == GetManaAttribute())
+    {
+        SetMana(FMath::Clamp(GetMana(), 0.f, GetManaMax()));
+    }
 }
 
 void USkirmisherAttributeSet::OnRep_Health(const FGameplayAttributeData& PrevHealth) const
