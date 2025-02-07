@@ -67,6 +67,7 @@ protected:
 	TMap<FActiveGameplayEffectHandle, UAbilitySystemComponent*> ActiveEffectHandles;
 
 
+	// 이펙트액터에 적용할만한 폴리시 묶음 구조체
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	TArray<FGameplayEffectPolicySet> GameplayEffectPolicySet;
 };

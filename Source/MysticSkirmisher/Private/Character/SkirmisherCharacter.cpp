@@ -40,6 +40,8 @@ void ASkirmisherCharacter::InitAbilityActorInfo()
     ASkirmisherState* skirmisherState = GetPlayerState<ASkirmisherState>();
     check(skirmisherState);
     skirmisherState->GetAbilitySystemComponent()->InitAbilityActorInfo(skirmisherState, this);
+    Cast<USkirmisherAbilitySystemComponent>(skirmisherState->GetAbilitySystemComponent())->AbilityActorInfoSet();
+
     AbilitySystemComponent = skirmisherState->GetAbilitySystemComponent();
     AttributeSet = skirmisherState->GetAttributeSet();
  
@@ -49,6 +51,10 @@ void ASkirmisherCharacter::InitAbilityActorInfo()
         {
             skirmisherHUD->InitOverlay(playerController, skirmisherState, AbilitySystemComponent, AttributeSet);
         }
-    }    
+    }
+
+
+
+    
 
 }

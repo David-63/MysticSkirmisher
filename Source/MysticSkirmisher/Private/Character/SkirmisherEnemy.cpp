@@ -20,9 +20,15 @@ ASkirmisherEnemy::ASkirmisherEnemy()
 void ASkirmisherEnemy::BeginPlay()
 {
     Super::BeginPlay();
-    AbilitySystemComponent->InitAbilityActorInfo(this, this);
+    InitAbilityActorInfo();
 }
 
+void ASkirmisherEnemy::InitAbilityActorInfo()
+{
+    AbilitySystemComponent->InitAbilityActorInfo(this, this);
+
+    Cast<USkirmisherAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
+}
 void ASkirmisherEnemy::HighlightActor()
 {
     GetMesh()->SetRenderCustomDepth(true);

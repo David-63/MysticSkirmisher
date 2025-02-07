@@ -53,7 +53,10 @@ class MYSTICSKIRMISHER_API USkirmisherAttributeSet : public UAttributeSet
 public:
 	USkirmisherAttributeSet();
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// 어트리뷰트가 적용되기 직전에 먼저 호출되는 함수 (사전에 입력되는 Value 값을 제어할 수 있음)
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
+	// GE가 적용될 때 Source와 Target에 접근하도록 해주는 함수
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Vital Attributes")
