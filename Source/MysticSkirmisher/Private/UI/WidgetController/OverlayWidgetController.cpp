@@ -20,10 +20,34 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 {
     const USkirmisherAttributeSet* skirmisherAttributeSet = CastChecked<USkirmisherAttributeSet>(AttributeSet);
 
-    AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetHealthAttribute()).AddUObject(this, &ThisClass::HealthChanged);
-    AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetHealthMaxAttribute()).AddUObject(this, &ThisClass::HealthMaxChanged);
-    AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetManaAttribute()).AddUObject(this, &ThisClass::ManaChanged);
-    AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetManaMaxAttribute()).AddUObject(this, &ThisClass::ManaMaxChanged);
+    AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetHealthAttribute()).AddLambda
+    (
+        [this](const FOnAttributeChangeData& Data)
+        {
+            OnHealthChanged.Broadcast(Data.NewValue);
+        }
+    );
+    AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetHealthMaxAttribute()).AddLambda
+    (
+        [this](const FOnAttributeChangeData& Data)
+        {
+            OnHealthMaxChanged.Broadcast(Data.NewValue);
+        }
+    );
+    AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetManaAttribute()).AddLambda
+    (
+        [this](const FOnAttributeChangeData& Data)
+        {
+            OnManaChanged.Broadcast(Data.NewValue);
+        }
+    );
+    AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skirmisherAttributeSet->GetManaMaxAttribute()).AddLambda
+    (
+        [this](const FOnAttributeChangeData& Data)
+        {
+            OnManaMaxChanged.Broadcast(Data.NewValue);
+        }
+    );
 
     Cast<USkirmisherAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda
     (
@@ -42,23 +66,4 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
             }
         }
     );
-}
-void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData &Data) const
-{
-    OnHealthChanged.Broadcast(Data.NewValue);
-}
-
-void UOverlayWidgetController::HealthMaxChanged(const FOnAttributeChangeData & Data) const
-{
-    OnHealthMaxChanged.Broadcast(Data.NewValue);
-}
-
-void UOverlayWidgetController::ManaChanged(const FOnAttributeChangeData &Data) const
-{
-    OnManaChanged.Broadcast(Data.NewValue);
-}
-
-void UOverlayWidgetController::ManaMaxChanged(const FOnAttributeChangeData &Data) const
-{
-    OnManaMaxChanged.Broadcast(Data.NewValue);
 }
