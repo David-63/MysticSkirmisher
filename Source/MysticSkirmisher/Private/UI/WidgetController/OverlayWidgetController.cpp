@@ -27,12 +27,18 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 
     Cast<USkirmisherAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda
     (
-        [](const FGameplayTagContainer& AssetTags)
+        // 람다 사용법: [범위](인자){로직}
+        [this](const FGameplayTagContainer& AssetTags)
         {
             for (const FGameplayTag& tag : AssetTags)
             {
-                const FString msg = FString::Printf(TEXT("GE Tag: %s"), *tag.ToString());
-                GEngine->AddOnScreenDebugMessage(-1, 0.3f, FColor::Green, msg);
+                // {"A.1"}.HasAny({"A","B"}) will return True, {"A"}.HasAny({"A.1","B"}) will return False
+                FGameplayTag messageTag = FGameplayTag::RequestGameplayTag(FName("Message"));
+                if (tag.MatchesTag(messageTag))
+                {
+                    FWidgetRow* row = GetDataTableRowByTag<FWidgetRow>(MessageWidgetDataTable, tag);
+                    MessageWidgetRowDeletage.Broadcast(*row);
+                }
             }
         }
     );

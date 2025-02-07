@@ -14,7 +14,6 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedSignature, float, NewM
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaMaxChangedSignature, float, NewManaMax);
 
 
-class USkirmisherUserWidget;
 
 USTRUCT(BlueprintType)
 struct FWidgetRow : public FTableRowBase
@@ -28,11 +27,14 @@ public:
 	FText Message = FText();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSubclassOf<USkirmisherUserWidget> MessageWidget;
+	TSubclassOf<class USkirmisherUserWidget> MessageWidget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UTexture2D* Image = nullptr;
 };
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FWidgetRow, Row);
+
 
 struct FOnAttributeChangeData;
 /**
@@ -57,6 +59,9 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "GAS | Attributes")
 	FOnManaMaxChangedSignature OnManaMaxChanged;
 
+	UPROPERTY(BlueprintAssignable, Category = "GAS | Messages")
+	FMessageWidgetRowSignature MessageWidgetRowDeletage;
+
 protected:
 	void HealthChanged(const FOnAttributeChangeData& Data) const;
 	void HealthMaxChanged(const FOnAttributeChangeData& Data) const;
@@ -66,4 +71,13 @@ protected:
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data")
 	TObjectPtr<UDataTable> MessageWidgetDataTable;
+
+	template<typename T>
+	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
 };
+
+template <typename T>
+inline T *UOverlayWidgetController::GetDataTableRowByTag(UDataTable *DataTable, const FGameplayTag &Tag)
+{
+	return DataTable->FindRow<T>(Tag.GetTagName(), TEXT(""));
+}
