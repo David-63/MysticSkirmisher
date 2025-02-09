@@ -59,31 +59,61 @@ public:
 	// GE가 적용될 때 Source와 Target에 접근하도록 해주는 함수
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 
+	/*
+		Vital Attributes
+	*/
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Vital Attributes")
 	FGameplayAttributeData Health;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Health);
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& PrevHealth) const;
-	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Health);
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthMax, Category = "Vital Attributes")
 	FGameplayAttributeData HealthMax;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, HealthMax);
 	UFUNCTION()
 	void OnRep_HealthMax(const FGameplayAttributeData& PrevHealthMax) const;
-	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, HealthMax);
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Mana, Category = "Vital Attributes")
 	FGameplayAttributeData Mana;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Mana);
 	UFUNCTION()
 	void OnRep_Mana(const FGameplayAttributeData& PrevMana) const;
-	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Mana);
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaMax, Category = "Vital Attributes")
 	FGameplayAttributeData ManaMax;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, ManaMax);
 	UFUNCTION()
 	void OnRep_ManaMax(const FGameplayAttributeData& PrevManaMax) const;
-	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, ManaMax);
 
 	
+	/*
+		Primary Attributes
+	*/
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Primary Attributes")
+	FGameplayAttributeData Strength;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Strength);
+	UFUNCTION()
+	void OnRep_Strength(const FGameplayAttributeData& PrevStrength) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Intelligence, Category = "Primary Attributes")
+	FGameplayAttributeData Intelligence;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Intelligence);
+	UFUNCTION()
+	void OnRep_Intelligence(const FGameplayAttributeData& PrevIntelligence) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Resilience, Category = "Primary Attributes")
+	FGameplayAttributeData Resilience;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Resilience);
+	UFUNCTION()
+	void OnRep_Resilience(const FGameplayAttributeData& PrevResilience) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Vigor, Category = "Primary Attributes")
+	FGameplayAttributeData Vigor;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Vigor);
+	UFUNCTION()
+	void OnRep_Vigor(const FGameplayAttributeData& PrevVigor) const;
+
 private:
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
 };

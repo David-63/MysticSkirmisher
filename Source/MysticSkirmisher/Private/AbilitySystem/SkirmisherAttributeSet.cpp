@@ -23,6 +23,12 @@ void USkirmisherAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimePropert
     DOREPLIFETIME_CONDITION_NOTIFY(USkirmisherAttributeSet, HealthMax, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(USkirmisherAttributeSet, Mana, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(USkirmisherAttributeSet, ManaMax, COND_None, REPNOTIFY_Always);
+
+    DOREPLIFETIME_CONDITION_NOTIFY(USkirmisherAttributeSet, Strength, COND_None, REPNOTIFY_Always);
+    DOREPLIFETIME_CONDITION_NOTIFY(USkirmisherAttributeSet, Intelligence, COND_None, REPNOTIFY_Always);
+    DOREPLIFETIME_CONDITION_NOTIFY(USkirmisherAttributeSet, Resilience, COND_None, REPNOTIFY_Always);
+    DOREPLIFETIME_CONDITION_NOTIFY(USkirmisherAttributeSet, Vigor, COND_None, REPNOTIFY_Always);
+    
 }
 
 void USkirmisherAttributeSet::PreAttributeChange(const FGameplayAttribute &Attribute, float &NewValue)
@@ -39,7 +45,7 @@ void USkirmisherAttributeSet::PreAttributeChange(const FGameplayAttribute &Attri
     }
 }
 
-void USkirmisherAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const
+void USkirmisherAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData &Data, FEffectProperties &Props) const
 {
     // Source = Causer of the effect, Target = Target of the effect (owner of this AS)
 
@@ -108,4 +114,24 @@ void USkirmisherAttributeSet::OnRep_Mana(const FGameplayAttributeData &PrevMana)
 void USkirmisherAttributeSet::OnRep_ManaMax(const FGameplayAttributeData & PrevManaMax) const
 {
     GAMEPLAYATTRIBUTE_REPNOTIFY(USkirmisherAttributeSet, ManaMax, PrevManaMax);
+}
+
+void USkirmisherAttributeSet::OnRep_Strength(const FGameplayAttributeData &PrevStrength) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(USkirmisherAttributeSet, Strength, PrevStrength);
+
+}
+void USkirmisherAttributeSet::OnRep_Intelligence(const FGameplayAttributeData &PrevIntelligence) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(USkirmisherAttributeSet, Intelligence, PrevIntelligence);
+}
+
+void USkirmisherAttributeSet::OnRep_Resilience(const FGameplayAttributeData &PrevResilience) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(USkirmisherAttributeSet, Resilience, PrevResilience);
+}
+
+void USkirmisherAttributeSet::OnRep_Vigor(const FGameplayAttributeData &PrevVigor) const
+{
+    GAMEPLAYATTRIBUTE_REPNOTIFY(USkirmisherAttributeSet, Vigor, PrevVigor);
 }
