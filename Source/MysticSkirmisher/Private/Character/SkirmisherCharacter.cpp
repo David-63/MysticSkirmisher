@@ -53,8 +53,5 @@ void ASkirmisherCharacter::InitAbilityActorInfo()
         }
     }
 
-
-
-    
-
+    InitializePrimaryAttributes();
 }
