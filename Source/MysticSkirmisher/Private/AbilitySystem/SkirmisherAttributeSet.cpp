@@ -9,8 +9,6 @@
 
 USkirmisherAttributeSet::USkirmisherAttributeSet()
 {
-    InitHealth(1.f);
-    InitMana(1.f);
 }
 
 void USkirmisherAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
