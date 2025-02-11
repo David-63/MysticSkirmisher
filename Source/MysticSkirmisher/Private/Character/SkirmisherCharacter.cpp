@@ -35,11 +35,18 @@ void ASkirmisherCharacter::OnRep_PlayerState()
     InitAbilityActorInfo();
 }
 
+int32 ASkirmisherCharacter::GetCurrentLevel()
+{
+    ASkirmisherState* playerState = GetPlayerState<ASkirmisherState>();
+    check(playerState);
+    return playerState->GetCurrentLevel();
+}
+
 void ASkirmisherCharacter::InitAbilityActorInfo()
 {
     ASkirmisherState* skirmisherState = GetPlayerState<ASkirmisherState>();
     check(skirmisherState);
-    
+
     skirmisherState->GetAbilitySystemComponent()->InitAbilityActorInfo(skirmisherState, this);
     Cast<USkirmisherAbilitySystemComponent>(skirmisherState->GetAbilitySystemComponent())->AbilityActorInfoSet();
 
@@ -56,3 +63,4 @@ void ASkirmisherCharacter::InitAbilityActorInfo()
 
     InitializeDefaultAttributes();
 }
+

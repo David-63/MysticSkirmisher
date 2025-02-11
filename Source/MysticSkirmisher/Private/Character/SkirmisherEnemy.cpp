@@ -6,6 +6,7 @@
 #include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 #include "AbilitySystem/SkirmisherAttributeSet.h"
 
+
 ASkirmisherEnemy::ASkirmisherEnemy()
 {
     GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
@@ -41,4 +42,9 @@ void ASkirmisherEnemy::UnHighlightActor()
 {
     GetMesh()->SetRenderCustomDepth(false);
     Weapon->SetRenderCustomDepth(false);    
+}
+
+int32 ASkirmisherEnemy::GetCurrentLevel()
+{
+    return Level;
 }

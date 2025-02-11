@@ -4,6 +4,8 @@
 #include "Player/SkirmisherState.h"
 #include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 #include "AbilitySystem/SkirmisherAttributeSet.h"
+#include "Net/UnrealNetwork.h"
+
 
 
 ASkirmisherState::ASkirmisherState()
@@ -16,7 +18,17 @@ ASkirmisherState::ASkirmisherState()
     AttributeSet = CreateDefaultSubobject<USkirmisherAttributeSet>("AttributeSet");
 }
 
-UAbilitySystemComponent* ASkirmisherState::GetAbilitySystemComponent() const
+void ASkirmisherState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(ASkirmisherState, Level);
+}
+
+UAbilitySystemComponent *ASkirmisherState::GetAbilitySystemComponent() const    
 {
     return AbilitySystemComponent;
+}
+void ASkirmisherState::OnRep_Level(int32 PrevLevel)
+{
+
 }
