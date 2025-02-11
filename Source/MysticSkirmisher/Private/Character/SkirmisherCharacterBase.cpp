@@ -29,7 +29,8 @@ void ASkirmisherCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> Ga
     check(IsValid(GetAbilitySystemComponent()));
     check(GameplayEffectClass);
 
-    const FGameplayEffectContextHandle contextHandle = GetAbilitySystemComponent()->MakeEffectContext();
+    FGameplayEffectContextHandle contextHandle = GetAbilitySystemComponent()->MakeEffectContext();
+	contextHandle.AddSourceObject(this);
     const FGameplayEffectSpecHandle specHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(GameplayEffectClass, Level, contextHandle);
     GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*specHandle.Data.Get(), GetAbilitySystemComponent());
 }
