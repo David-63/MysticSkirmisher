@@ -68,11 +68,7 @@ public:
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& PrevHealth) const;
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthMax, Category = "Vital Attributes")
-	FGameplayAttributeData HealthMax;
-	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, HealthMax);
-	UFUNCTION()
-	void OnRep_HealthMax(const FGameplayAttributeData& PrevHealthMax) const;
+	
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Mana, Category = "Vital Attributes")
 	FGameplayAttributeData Mana;
@@ -80,11 +76,7 @@ public:
 	UFUNCTION()
 	void OnRep_Mana(const FGameplayAttributeData& PrevMana) const;
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaMax, Category = "Vital Attributes")
-	FGameplayAttributeData ManaMax;
-	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, ManaMax);
-	UFUNCTION()
-	void OnRep_ManaMax(const FGameplayAttributeData& PrevManaMax) const;
+	
 
 	
 	/*
@@ -113,6 +105,82 @@ public:
 	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Vigor);
 	UFUNCTION()
 	void OnRep_Vigor(const FGameplayAttributeData& PrevVigor) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Dexterity, Category = "Primary Attributes")
+	FGameplayAttributeData Dexterity;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Dexterity);
+	UFUNCTION()
+	void OnRep_Dexterity(const FGameplayAttributeData& PrevDexterity) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Agility, Category = "Primary Attributes")
+	FGameplayAttributeData Agility;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Agility);
+	UFUNCTION()
+	void OnRep_Agility(const FGameplayAttributeData& PrevAgility) const;
+
+	/*
+		Secondary Attributes
+	*/
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Armor, Category = "Secondary Attributes")
+	FGameplayAttributeData Armor;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Armor);
+	UFUNCTION()
+	void OnRep_Armor(const FGameplayAttributeData& PrevArmor) const;
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Block, Category = "Secondary Attributes")
+	FGameplayAttributeData Block;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Block);
+	UFUNCTION()
+	void OnRep_Block(const FGameplayAttributeData& PrevBlock) const;
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Penetration, Category = "Secondary Attributes")
+	FGameplayAttributeData Penetration;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Penetration);
+	UFUNCTION()
+	void OnRep_Penetration(const FGameplayAttributeData& PrevPenetration) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalChance, Category = "Secondary Attributes")
+	FGameplayAttributeData CriticalChance;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, CriticalChance);
+	UFUNCTION()
+	void OnRep_CriticalChance(const FGameplayAttributeData& PrevCriticalChance) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalDamage, Category = "Secondary Attributes")
+	FGameplayAttributeData CriticalDamage;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, CriticalDamage);
+	UFUNCTION()
+	void OnRep_CriticalDamage(const FGameplayAttributeData& PrevCriticalDamage) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_CriticalResilience, Category = "Secondary Attributes")
+	FGameplayAttributeData CriticalResilience;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, CriticalResilience);
+	UFUNCTION()
+	void OnRep_CriticalResilience(const FGameplayAttributeData& PrevCriticalResilience) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthRegeneration, Category = "Secondary Attributes")
+	FGameplayAttributeData HealthRegeneration;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, HealthRegeneration);
+	UFUNCTION()
+	void OnRep_HealthRegeneration(const FGameplayAttributeData& PrevHealthRegeneration) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaRegeneration, Category = "Secondary Attributes")
+	FGameplayAttributeData ManaRegeneration;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, ManaRegeneration);
+	UFUNCTION()
+	void OnRep_ManaRegeneration(const FGameplayAttributeData& PrevManaRegeneration) const;
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_HealthMax, Category = "Secondary Attributes")
+	FGameplayAttributeData HealthMax;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, HealthMax);
+	UFUNCTION()
+	void OnRep_HealthMax(const FGameplayAttributeData& PrevHealthMax) const;
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ManaMax, Category = "Secondary Attributes")
+	FGameplayAttributeData ManaMax;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, ManaMax);
+	UFUNCTION()
+	void OnRep_ManaMax(const FGameplayAttributeData& PrevManaMax) const;
 
 private:
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props) const;
