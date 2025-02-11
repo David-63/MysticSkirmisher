@@ -39,6 +39,7 @@ void ASkirmisherCharacter::InitAbilityActorInfo()
 {
     ASkirmisherState* skirmisherState = GetPlayerState<ASkirmisherState>();
     check(skirmisherState);
+    
     skirmisherState->GetAbilitySystemComponent()->InitAbilityActorInfo(skirmisherState, this);
     Cast<USkirmisherAbilitySystemComponent>(skirmisherState->GetAbilitySystemComponent())->AbilityActorInfoSet();
 
@@ -53,5 +54,5 @@ void ASkirmisherCharacter::InitAbilityActorInfo()
         }
     }
 
-    InitializePrimaryAttributes();
+    InitializeDefaultAttributes();
 }
