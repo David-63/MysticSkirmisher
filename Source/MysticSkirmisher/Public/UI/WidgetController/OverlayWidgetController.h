@@ -35,6 +35,7 @@ struct FOnAttributeChangeData;
 /**
  * 
  */
+
 UCLASS(BlueprintType, Blueprintable)
 class MYSTICSKIRMISHER_API UOverlayWidgetController : public USkirmisherWidgetController
 {
