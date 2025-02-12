@@ -24,7 +24,6 @@ void USkirmisherAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimePropert
     DOREPLIFETIME_CONDITION_NOTIFY(USkirmisherAttributeSet, Resilience, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(USkirmisherAttributeSet, Vigor, COND_None, REPNOTIFY_Always);
     DOREPLIFETIME_CONDITION_NOTIFY(USkirmisherAttributeSet, Dexterity, COND_None, REPNOTIFY_Always);    
-    DOREPLIFETIME_CONDITION_NOTIFY(USkirmisherAttributeSet, Agility, COND_None, REPNOTIFY_Always);
     
     // Secondary Attributes
     DOREPLIFETIME_CONDITION_NOTIFY(USkirmisherAttributeSet, Armor, COND_None, REPNOTIFY_Always);
@@ -137,11 +136,6 @@ void USkirmisherAttributeSet::OnRep_Dexterity(const FGameplayAttributeData &Prev
 {
     GAMEPLAYATTRIBUTE_REPNOTIFY(USkirmisherAttributeSet, Dexterity, PrevDexterity);
 }
-void USkirmisherAttributeSet::OnRep_Agility(const FGameplayAttributeData &PrevAgility) const
-{
-    GAMEPLAYATTRIBUTE_REPNOTIFY(USkirmisherAttributeSet, Agility, PrevAgility);
-}
-
 
 void USkirmisherAttributeSet::OnRep_Armor(const FGameplayAttributeData &PrevArmor) const
 {

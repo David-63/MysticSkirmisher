@@ -112,12 +112,6 @@ public:
 	UFUNCTION()
 	void OnRep_Dexterity(const FGameplayAttributeData& PrevDexterity) const;
 
-	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Agility, Category = "Primary Attributes")
-	FGameplayAttributeData Agility;
-	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Agility);
-	UFUNCTION()
-	void OnRep_Agility(const FGameplayAttributeData& PrevAgility) const;
-
 	/*
 		Secondary Attributes
 	*/
