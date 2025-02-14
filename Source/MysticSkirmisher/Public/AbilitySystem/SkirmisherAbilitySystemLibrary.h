@@ -8,6 +8,7 @@
 
 
 class UOverlayWidgetController;
+class UAttributeMenuWidgetController;
 /**
  * 
  */
@@ -18,5 +19,8 @@ class MYSTICSKIRMISHER_API USkirmisherAbilitySystemLibrary : public UBlueprintFu
 public:
 	UFUNCTION(BlueprintPure, Category = "SkirmisherSystemLibrary | WidgetController")
 	static UOverlayWidgetController* GetOverlayWidgetController(const UObject* WorldContextObject);
-	
+
+
+	UFUNCTION(BlueprintPure, Category = "SkirmisherSystemLibrary | WidgetController")
+	static UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const UObject* WorldContextObject);
 };

@@ -12,6 +12,7 @@ class USkirmisherUserWidget;
 class UAbilitySystemComponent;
 class UAttributeSet;
 class UOverlayWidgetController;
+class UAttributeMenuWidgetController;
 /**
  * 
  */
@@ -20,13 +21,16 @@ class MYSTICSKIRMISHER_API ASkirmisherHUD : public AHUD
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY()
-	TObjectPtr<USkirmisherUserWidget> OverlayWidget;
-
+	
 	UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WCParams);
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
 
+
+	UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams);
+
 private:
+	UPROPERTY()
+	TObjectPtr<USkirmisherUserWidget> OverlayWidget;
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<USkirmisherUserWidget> OverlayWidgetClass;
 	UPROPERTY()
@@ -34,4 +38,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UOverlayWidgetController> OverlayWidgetControllerClass;
 
+	TObjectPtr<UAttributeMenuWidgetController> AttributeMenuWidgetController;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UAttributeMenuWidgetController> AttributeMenuWidgetControllerClass;
 };

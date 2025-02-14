@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class MYSTICSKIRMISHER_API UAttributeMenuWidgetController : public USkirmisherWidgetController
 {
 	GENERATED_BODY()

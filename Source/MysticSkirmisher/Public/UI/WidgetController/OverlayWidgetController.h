@@ -9,7 +9,7 @@
 
 
 
-USTRUCT(BlueprintType)
+USTRUCT(BlueprintType, Blueprintable)
 struct FWidgetRow : public FTableRowBase
 {
 	GENERATED_BODY()

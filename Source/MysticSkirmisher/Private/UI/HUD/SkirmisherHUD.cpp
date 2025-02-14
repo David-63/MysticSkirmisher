@@ -4,6 +4,7 @@
 #include "UI/HUD/SkirmisherHUD.h"
 #include "UI/Widget/SkirmisherUserWidget.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
+#include "UI/WidgetController/AttributeMenuWidgetController.h"
 
 
 UOverlayWidgetController *ASkirmisherHUD::GetOverlayWidgetController(const FWidgetControllerParams& WCParams)
@@ -16,6 +17,17 @@ UOverlayWidgetController *ASkirmisherHUD::GetOverlayWidgetController(const FWidg
     }
     return OverlayWidgetController;
 }
+UAttributeMenuWidgetController *ASkirmisherHUD::GetAttributeMenuWidgetController(const FWidgetControllerParams& WCParams)
+{
+    if (AttributeMenuWidgetController == nullptr)
+    {
+        AttributeMenuWidgetController = NewObject<UAttributeMenuWidgetController>(this, AttributeMenuWidgetControllerClass);
+        AttributeMenuWidgetController->SetWidgetControllerParams(WCParams);
+        AttributeMenuWidgetController->BindCallbacksToDependencies();
+    }
+    return AttributeMenuWidgetController;
+}
+
 void ASkirmisherHUD::InitOverlay(APlayerController * PC, APlayerState * PS, UAbilitySystemComponent * ASC, UAttributeSet * AS)
 {
     checkf(OverlayWidgetClass, TEXT("Overlay Widget Class uninitialized, please fill out BP_SkirmisherHUD"));

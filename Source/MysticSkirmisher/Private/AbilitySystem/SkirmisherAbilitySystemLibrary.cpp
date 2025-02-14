@@ -25,3 +25,21 @@ UOverlayWidgetController* USkirmisherAbilitySystemLibrary::GetOverlayWidgetContr
 
     return nullptr;
 }
+
+UAttributeMenuWidgetController* USkirmisherAbilitySystemLibrary::GetAttributeMenuWidgetController(const UObject* WorldContextObject)
+{
+    if (APlayerController* pc = UGameplayStatics::GetPlayerController(WorldContextObject, 0))
+    {
+        if (ASkirmisherHUD* skirmisherHUD = Cast<ASkirmisherHUD>(pc->GetHUD()))
+        {
+            ASkirmisherState* ps = pc->GetPlayerState<ASkirmisherState>();
+            UAbilitySystemComponent* asc = ps->GetAbilitySystemComponent();
+            UAttributeSet* as = ps->GetAttributeSet();
+            const FWidgetControllerParams wcp(pc, ps, asc, as);
+
+            return skirmisherHUD->GetAttributeMenuWidgetController(wcp);
+        }
+    }
+
+    return nullptr;
+}
