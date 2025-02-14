@@ -3,9 +3,7 @@
 
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
 #include "AbilitySystem/SkirmisherAttributeSet.h"
-//#include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 #include "AbilitySystem/Data/AttributeInfo.h"
-#include "SkirmisherGameplayTags.h"
 
 void UAttributeMenuWidgetController::BroadcastInitialValues()
 {
@@ -14,12 +12,31 @@ void UAttributeMenuWidgetController::BroadcastInitialValues()
 
     for (auto& pair : skirmisherAttributeSet->TagsToAttributes)
     {
-        FSkirmisherAttributeInfo info = AttributeInfo->FindAttributeInfoForTag(pair.Key);        
-        info.AttributeValue = pair.Value().GetNumericValue(skirmisherAttributeSet);
-        AttributeInfoDelegate.Broadcast(info);
+        BroadcastAttributeInfo(pair.Key, pair.Value());
     }
 }
 
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 {
+    check(AttributeInfo);
+    const USkirmisherAttributeSet* skirmisherAttributeSet = CastChecked<USkirmisherAttributeSet>(AttributeSet);
+
+    for (auto& pair : skirmisherAttributeSet->TagsToAttributes)
+    {
+        AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(pair.Value()).AddLambda
+        (
+            [this, pair](const FOnAttributeChangeData& Data)
+            {
+                BroadcastAttributeInfo(pair.Key, pair.Value());
+            }
+        );
+    }
+
+}
+
+void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag &AttributeTag, const FGameplayAttribute &Attribute) const
+{
+    FSkirmisherAttributeInfo info = AttributeInfo->FindAttributeInfoForTag(AttributeTag);
+    info.AttributeValue = Attribute.GetNumericValue(AttributeSet);
+    AttributeInfoDelegate.Broadcast(info);
 }
