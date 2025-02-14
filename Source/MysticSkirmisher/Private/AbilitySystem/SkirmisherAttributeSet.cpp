@@ -6,9 +6,29 @@
 #include "GameplayEffectExtension.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "GameFramework/Character.h"
+#include "SkirmisherGameplayTags.h"
 
 USkirmisherAttributeSet::USkirmisherAttributeSet()
 {
+    const FSkirmisherGameplayTags& gameplayTags = FSkirmisherGameplayTags::Get();
+    
+    TagsToAttributes.Add(gameplayTags.Attributes_Primary_Strength, GetStrengthAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Primary_Intelligence, GetIntelligenceAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Primary_Dexterity, GetDexterityAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Primary_Resilience, GetResilienceAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Primary_Vigor, GetVigorAttribute);
+
+    TagsToAttributes.Add(gameplayTags.Attributes_Secondary_HealthMax, GetHealthMaxAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Secondary_HealthRegeneration, GetHealthRegenerationAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Secondary_ManaMax, GetManaMaxAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Secondary_ManaRegeneration, GetManaRegenerationAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Secondary_Armor, GetArmorAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Secondary_Block, GetBlockAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Secondary_Penetration, GetPenetrationAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Secondary_CriticalChance, GetCriticalChanceAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Secondary_CriticalDamage, GetCriticalDamageAttribute);
+    TagsToAttributes.Add(gameplayTags.Attributes_Secondary_CriticalResilience, GetCriticalResilienceAttribute);
+
 }
 
 void USkirmisherAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty> &OutLifetimeProps) const

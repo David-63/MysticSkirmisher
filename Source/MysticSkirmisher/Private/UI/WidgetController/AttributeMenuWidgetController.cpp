@@ -12,10 +12,12 @@ void UAttributeMenuWidgetController::BroadcastInitialValues()
     check(AttributeInfo);
     const USkirmisherAttributeSet* skirmisherAttributeSet = CastChecked<USkirmisherAttributeSet>(AttributeSet);
 
-    FSkirmisherAttributeInfo info = AttributeInfo->FindAttributeInfoForTag(FSkirmisherGameplayTags::Get().Attributes_Primary_Strength);
-    info.AttributeValue = skirmisherAttributeSet->GetStrength();    
-    AttributeInfoDelegate.Broadcast(info);
-
+    for (auto& pair : skirmisherAttributeSet->TagsToAttributes)
+    {
+        FSkirmisherAttributeInfo info = AttributeInfo->FindAttributeInfoForTag(pair.Key);        
+        info.AttributeValue = pair.Value().GetNumericValue(skirmisherAttributeSet);
+        AttributeInfoDelegate.Broadcast(info);
+    }
 }
 
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()
