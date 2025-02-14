@@ -7,11 +7,11 @@
 #include "SkirmisherHUD.generated.h"
 
 
+struct FWidgetControllerParams;
 class USkirmisherUserWidget;
-class UOverlayWidgetController;
 class UAbilitySystemComponent;
 class UAttributeSet;
-struct FWidgetControllerParams;
+class UOverlayWidgetController;
 /**
  * 
  */
