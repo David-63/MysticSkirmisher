@@ -9,6 +9,9 @@ FSkirmisherGameplayTags FSkirmisherGameplayTags::GameplayTags;
 
 void FSkirmisherGameplayTags::InitializeNativeGameplayTags()
 {
+    /*
+        Primary Attributes
+    */
     GameplayTags.Attributes_Primary_Strength = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Primary.Strength")
     , FString("Increases physical damage"));
     GameplayTags.Attributes_Primary_Intelligence = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Primary.Intelligence")
@@ -20,6 +23,9 @@ void FSkirmisherGameplayTags::InitializeNativeGameplayTags()
     GameplayTags.Attributes_Primary_Vigor = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Primary.Vigor")
     , FString("Increases Vital"));
     
+    /*
+        Secondary Attributes
+    */
     GameplayTags.Attributes_Secondary_HealthMax = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Secondary.HealthMax")
     , FString("Max of health"));
     GameplayTags.Attributes_Secondary_HealthRegeneration = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Secondary.HealthRegeneration")
@@ -41,8 +47,29 @@ void FSkirmisherGameplayTags::InitializeNativeGameplayTags()
     GameplayTags.Attributes_Secondary_CriticalResilience = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Secondary.CriticalResilience")
     , FString("Reduses critical hit chance of attacking enemies"));
     
+    /*
+        Vital Attributes
+    */
     GameplayTags.Attributes_Vital_Health = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Vital.Health")
     , FString("Amount of damage a player can take before death"));
     GameplayTags.Attributes_Vital_Mana = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Vital.Mana")
     , FString("A resource used to cast spells"));
+
+    /*
+        Input Tags
+    */
+   GameplayTags.InputTag_LMB = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.LMB")
+   , FString("Input tag for Left Mouse Button"));
+   GameplayTags.InputTag_RMB = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.RMB")
+   , FString("Input tag for Right Mouse Button"));
+   
+   GameplayTags.InputTag_1 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.1")
+   , FString("Input tag for 1 key"));
+   GameplayTags.InputTag_2 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.2")
+   , FString("Input tag for 2 key"));
+   GameplayTags.InputTag_3 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.3")
+   , FString("Input tag for 3 key"));
+   GameplayTags.InputTag_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.4")
+   , FString("Input tag for 4 key"));
+
 }

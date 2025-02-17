@@ -8,12 +8,9 @@ FSkirmisherAttributeInfo UAttributeInfo::FindAttributeInfoForTag(const FGameplay
 {
     for (const FSkirmisherAttributeInfo& info : AttributeInformation)
     {
-        if (info.AttributeTag == AttributeTag)
+        if (info.AttributeTag.MatchesTagExact(AttributeTag))
         {
-            if (info.AttributeTag.MatchesTagExact(AttributeTag))
-            {
-                return info;
-            }
+            return info;
         }
     }
 
