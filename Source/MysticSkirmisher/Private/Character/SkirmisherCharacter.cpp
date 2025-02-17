@@ -26,6 +26,7 @@ void ASkirmisherCharacter::PossessedBy(AController* NewController)
     Super::PossessedBy(NewController);
     // Init ability actor info for Server
     InitAbilityActorInfo();
+    AddCharacterAbilities();
 }
 
 void ASkirmisherCharacter::OnRep_PlayerState()

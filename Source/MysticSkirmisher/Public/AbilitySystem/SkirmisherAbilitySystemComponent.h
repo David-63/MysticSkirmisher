@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+//#include "Abilities/GameplayAbility.h"
 #include "SkirmisherAbilitySystemComponent.generated.h"
+
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer& /*AssetTags*/);
 
@@ -17,6 +19,8 @@ class MYSTICSKIRMISHER_API USkirmisherAbilitySystemComponent : public UAbilitySy
 	GENERATED_BODY()
 public:
 	void AbilityActorInfoSet();
+
+	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
 
 protected:
 	void EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle);

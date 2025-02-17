@@ -3,6 +3,7 @@
 
 #include "Character/SkirmisherCharacterBase.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 
 ASkirmisherCharacterBase::ASkirmisherCharacterBase()
 {
@@ -40,4 +41,12 @@ void ASkirmisherCharacterBase::InitializeDefaultAttributes() const
 	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);	
+}
+
+void ASkirmisherCharacterBase::AddCharacterAbilities()
+{
+	USkirmisherAbilitySystemComponent* skirmisherASC = CastChecked<USkirmisherAbilitySystemComponent>(GetAbilitySystemComponent());
+	if (!HasAuthority()) return;
+
+	skirmisherASC->AddCharacterAbilities(StartupAbiliities);
 }
