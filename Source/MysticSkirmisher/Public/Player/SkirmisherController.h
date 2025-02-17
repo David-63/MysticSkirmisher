@@ -13,7 +13,7 @@ class IEnemyInterface;
 class USkirmisherInputConfig;
 struct FGameplayTag;
 class USkirmisherAbilitySystemComponent;
-
+class USplineComponent;
 /**
  * 
  */
@@ -32,16 +32,15 @@ public:
 	virtual void PlayerTick(float DeltaTime) override;
 
 private:
+	/*
+		Input Func
+	*/
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputMappingContext> InputContext;
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> IA_Move;
 
 	void ActionMove(const struct FInputActionValue& InputValue);
-
-	void CursorTrace();
-	TScriptInterface<IEnemyInterface> LastActor;
-	TScriptInterface<IEnemyInterface> ThisActor;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<USkirmisherInputConfig> InputConfig;
@@ -52,6 +51,29 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<USkirmisherAbilitySystemComponent> SkirmisherAbilitySystemComponent;
-
 	USkirmisherAbilitySystemComponent* GetASC();
+
+	/*
+		Highlight enemy
+	*/
+	void CursorTrace();
+	TScriptInterface<IEnemyInterface> LastActor;
+	TScriptInterface<IEnemyInterface> ThisActor;
+
+
+
+	/*
+		Click to move
+	*/
+	FVector CachedDestination = FVector::ZeroVector;
+	float FollowTime = 0.f;
+	float ShortPressThreshold = 0.2f;
+	bool bAutoRunning = false;
+	bool bTargeting = false;
+
+	UPROPERTY(EditDefaultsOnly)
+	float AutoRunAcceptanceRadius = 50.f;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USplineComponent> Spline;
 };

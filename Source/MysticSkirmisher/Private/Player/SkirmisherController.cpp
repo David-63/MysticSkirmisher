@@ -8,10 +8,14 @@
 #include "Input/SkirmisherInputComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
+#include "Components/SplineComponent.h"
+#include "SkirmisherGameplayTags.h"
 
 ASkirmisherController::ASkirmisherController()
 {
     bReplicates = true;
+
+    Spline = CreateDefaultSubobject<USplineComponent>("Spline");
 }
 
 void ASkirmisherController::BeginPlay()
@@ -64,6 +68,64 @@ void ASkirmisherController::ActionMove(const FInputActionValue &InputValue)
 
 }
 
+void ASkirmisherController::AbilityInputTagPressed(FGameplayTag InputTag)
+{
+    if (InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_LMB))
+    {
+        bTargeting = ThisActor ? true : false;
+        bAutoRunning = false;
+    }  
+}
+void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
+{
+    if (GetASC() == nullptr) return;
+    GetASC()->AbilityInputTagReleased(InputTag);    
+}
+void ASkirmisherController::AbilityInputTagHeld(FGameplayTag InputTag)
+{
+    if (!InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_LMB))
+    {
+        if (GetASC())
+        {
+            GetASC()->AbilityInputTagHeld(InputTag);
+        }
+        return;
+    }
+
+    if (bTargeting)
+    {
+        if (GetASC())
+        {
+            GetASC()->AbilityInputTagHeld(InputTag);
+        }
+    }
+    else
+    {
+        FollowTime += GetWorld()->GetDeltaSeconds();
+        FHitResult hit;
+        if (GetHitResultUnderCursor(ECC_Visibility, false, hit))
+        {
+            CachedDestination = hit.ImpactPoint;
+        }
+
+        if (APawn* controlledPawn = GetPawn())
+        {
+            const FVector worldDirection = (CachedDestination - controlledPawn->GetActorLocation()).GetSafeNormal();
+            controlledPawn->AddMovementInput(worldDirection);
+        }
+    }
+}
+
+USkirmisherAbilitySystemComponent* ASkirmisherController::GetASC()
+{
+    if (SkirmisherAbilitySystemComponent == nullptr)
+    {        
+        SkirmisherAbilitySystemComponent = Cast<USkirmisherAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+    }
+    return SkirmisherAbilitySystemComponent;
+}
+
+
 void ASkirmisherController::CursorTrace()
 {
     FHitResult cursorHit;
@@ -113,30 +175,4 @@ void ASkirmisherController::CursorTrace()
             // Case E
         }
     }
-}
-
-void ASkirmisherController::AbilityInputTagPressed(FGameplayTag InputTag)
-{
-    //GEngine->AddOnScreenDebugMessage(0, 0.3f, FColor::Red, *InputTag.ToString());
-}
-void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
-{
-    if (GetASC() == nullptr) return;
-    GetASC()->AbilityInputTagReleased(InputTag);
-    
-}
-void ASkirmisherController::AbilityInputTagHeld(FGameplayTag InputTag)
-{
-    if (GetASC() == nullptr) return;    
-    GetASC()->AbilityInputTagHeld(InputTag);
-    
-}
-
-USkirmisherAbilitySystemComponent* ASkirmisherController::GetASC()
-{
-    if (SkirmisherAbilitySystemComponent == nullptr)
-    {        
-        SkirmisherAbilitySystemComponent = Cast<USkirmisherAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
-    }
-    return SkirmisherAbilitySystemComponent;
 }
