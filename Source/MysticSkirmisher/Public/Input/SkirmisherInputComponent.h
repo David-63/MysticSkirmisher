@@ -31,11 +31,11 @@ inline void USkirmisherInputComponent::BindAbilityActions(const USkirmisherInput
 		{			
 			if (PressedFunc)
 			{
-				BindAction(action.InputAciton, ETriggerEvent::Started, Object, PressedFunc, action.InputTag);
+				BindAction(action.InputAction, ETriggerEvent::Started, Object, PressedFunc, action.InputTag);
 			}
 			if (ReleasedFunc)
 			{
-				BindAction(action.InputAction, ETriggerEvent::Completed, Object, ReleasedFunc, action.InputTag)
+				BindAction(action.InputAction, ETriggerEvent::Completed, Object, ReleasedFunc, action.InputTag);
 			}
 			if (HeldFunc)
 			{

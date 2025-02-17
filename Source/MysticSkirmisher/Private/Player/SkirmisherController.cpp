@@ -3,8 +3,9 @@
 
 #include "Player/SkirmisherController.h"
 #include "EnhancedInputSubsystems.h"
-#include "EnhancedInputComponent.h"
 #include "Interaction/EnemyInterface.h"
+#include "GameplayTagContainer.h"
+#include "Input/SkirmisherInputComponent.h"
 
 ASkirmisherController::ASkirmisherController()
 {
@@ -32,9 +33,10 @@ void ASkirmisherController::BeginPlay()
 void ASkirmisherController::SetupInputComponent()
 {
     Super::SetupInputComponent();
-    UEnhancedInputComponent* enhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
+    USkirmisherInputComponent* skirmisherInputComponent = CastChecked<USkirmisherInputComponent>(InputComponent);
 
-    enhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &ThisClass::ActionMove);
+    skirmisherInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &ASkirmisherController::ActionMove);
+    skirmisherInputComponent->BindAbilityActions(InputConfig, this, &ASkirmisherController::AbilityInputTagPressed,&ASkirmisherController::AbilityInputTagReleased,&ASkirmisherController::AbilityInputTagHeld);
 }
 
 void ASkirmisherController::PlayerTick(float DeltaTime)
@@ -109,4 +111,17 @@ void ASkirmisherController::CursorTrace()
             // Case E
         }
     }
+}
+
+void ASkirmisherController::AbilityInputTagPressed(FGameplayTag InputTag)
+{
+    GEngine->AddOnScreenDebugMessage(0, 0.3f, FColor::Red, *InputTag.ToString());
+}
+void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
+{
+    GEngine->AddOnScreenDebugMessage(1, 0.3f, FColor::Green, *InputTag.ToString());
+}
+void ASkirmisherController::AbilityInputTagHeld(FGameplayTag InputTag)
+{    
+    GEngine->AddOnScreenDebugMessage(1, 0.3f, FColor::Blue, *InputTag.ToString());
 }

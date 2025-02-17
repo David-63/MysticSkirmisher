@@ -10,6 +10,9 @@
 class UInputMappingContext;
 class UInputAction;
 class IEnemyInterface;
+class USkirmisherInputConfig;
+struct FGameplayTag;
+
 /**
  * 
  */
@@ -39,5 +42,10 @@ private:
 	TScriptInterface<IEnemyInterface> LastActor;
 	TScriptInterface<IEnemyInterface> ThisActor;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<USkirmisherInputConfig> InputConfig;
 
+	void AbilityInputTagPressed(FGameplayTag InputTag);
+	void AbilityInputTagReleased(FGameplayTag InputTag);
+	void AbilityInputTagHeld(FGameplayTag InputTag);
 };
