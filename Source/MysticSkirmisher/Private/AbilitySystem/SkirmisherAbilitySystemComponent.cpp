@@ -3,6 +3,7 @@
 
 #include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 #include "SkirmisherGameplayTags.h"
+#include "AbilitySystem/SkirmisherGameplayAbility.h"
 
 void USkirmisherAbilitySystemComponent::AbilityActorInfoSet()
 {
@@ -11,13 +12,47 @@ void USkirmisherAbilitySystemComponent::AbilityActorInfoSet()
 
 void USkirmisherAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>> &StartupAbilities)
 {
-    for (TSubclassOf<UGameplayAbility> abilityClass : StartupAbilities)
+    for (const TSubclassOf<UGameplayAbility> abilityClass : StartupAbilities)
     {
         FGameplayAbilitySpec abilitySpec = FGameplayAbilitySpec(abilityClass, 1);
-        //GiveAbility(abilitySpec);
-        GiveAbilityAndActivateOnce(abilitySpec);
+        if (const USkirmisherGameplayAbility* skirmisherAbility = Cast<USkirmisherGameplayAbility>(abilitySpec.Ability) )
+        {
+            abilitySpec.GetDynamicSpecSourceTags().AddTag(skirmisherAbility->StartupInputTag);
+            GiveAbility(abilitySpec);
+        }        
     }
 }
+
+void USkirmisherAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& InputTag)
+{
+    if (!InputTag.IsValid()) return;
+    
+    for (auto& abilitySpec : GetActivatableAbilities())
+    {
+        if (abilitySpec.GetDynamicSpecSourceTags().HasTagExact(InputTag))
+        {
+            AbilitySpecInputReleased(abilitySpec);            
+        }
+    }
+}
+void USkirmisherAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputTag)
+{
+    if (!InputTag.IsValid()) return;
+    
+    for (auto& abilitySpec : GetActivatableAbilities())
+    {
+        if (abilitySpec.GetDynamicSpecSourceTags().HasTagExact(InputTag))
+        {
+            AbilitySpecInputPressed(abilitySpec);
+            if (!abilitySpec.IsActive())
+            {
+                TryActivateAbility(abilitySpec.Handle);
+            }
+        }
+    }
+}
+
+
 void USkirmisherAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
     FGameplayTagContainer tagContainer;

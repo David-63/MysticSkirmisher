@@ -12,6 +12,7 @@ class UInputAction;
 class IEnemyInterface;
 class USkirmisherInputConfig;
 struct FGameplayTag;
+class USkirmisherAbilitySystemComponent;
 
 /**
  * 
@@ -48,4 +49,9 @@ private:
 	void AbilityInputTagPressed(FGameplayTag InputTag);
 	void AbilityInputTagReleased(FGameplayTag InputTag);
 	void AbilityInputTagHeld(FGameplayTag InputTag);
+
+	UPROPERTY()
+	TObjectPtr<USkirmisherAbilitySystemComponent> SkirmisherAbilitySystemComponent;
+
+	USkirmisherAbilitySystemComponent* GetASC();
 };

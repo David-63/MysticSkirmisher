@@ -6,6 +6,8 @@
 #include "Interaction/EnemyInterface.h"
 #include "GameplayTagContainer.h"
 #include "Input/SkirmisherInputComponent.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 
 ASkirmisherController::ASkirmisherController()
 {
@@ -115,13 +117,26 @@ void ASkirmisherController::CursorTrace()
 
 void ASkirmisherController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-    GEngine->AddOnScreenDebugMessage(0, 0.3f, FColor::Red, *InputTag.ToString());
+    //GEngine->AddOnScreenDebugMessage(0, 0.3f, FColor::Red, *InputTag.ToString());
 }
 void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-    GEngine->AddOnScreenDebugMessage(1, 0.3f, FColor::Green, *InputTag.ToString());
+    if (GetASC() == nullptr) return;
+    GetASC()->AbilityInputTagReleased(InputTag);
+    
 }
 void ASkirmisherController::AbilityInputTagHeld(FGameplayTag InputTag)
-{    
-    GEngine->AddOnScreenDebugMessage(1, 0.3f, FColor::Blue, *InputTag.ToString());
+{
+    if (GetASC() == nullptr) return;    
+    GetASC()->AbilityInputTagHeld(InputTag);
+    
+}
+
+USkirmisherAbilitySystemComponent* ASkirmisherController::GetASC()
+{
+    if (SkirmisherAbilitySystemComponent == nullptr)
+    {        
+        SkirmisherAbilitySystemComponent = Cast<USkirmisherAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+    }
+    return SkirmisherAbilitySystemComponent;
 }
