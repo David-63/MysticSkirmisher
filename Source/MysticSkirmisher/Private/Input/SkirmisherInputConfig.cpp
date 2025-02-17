@@ -5,7 +5,7 @@
 
 const UInputAction *USkirmisherInputConfig::FindAbilityInputActionForTag(const FGameplayTag &InputTag, bool bLogNotFound) const
 {
-    for (const FSkirmisherInputAction& inputAction : SkirmisherInputActions)
+    for (const FSkirmisherInputAction& inputAction : AbilityInputActions)
     {
         if (inputAction.InputTag == InputTag)
         {
