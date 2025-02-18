@@ -25,6 +25,13 @@ void ASkirmisherCharacterBase::BeginPlay()
 	
 }
 
+FVector ASkirmisherCharacterBase::GetCombatSocketLocation()
+{
+	check(Weapon);
+	return Weapon->GetSocketLocation(WeaponTipSocketName);
+}
+
+
 void ASkirmisherCharacterBase::ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const
 {
     check(IsValid(GetAbilitySystemComponent()));

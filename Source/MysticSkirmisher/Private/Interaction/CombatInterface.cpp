@@ -10,3 +10,8 @@ int32 ICombatInterface::GetCurrentLevel()
 {
     return 0;
 }
+
+FVector ICombatInterface::GetCombatSocketLocation()
+{
+    return FVector();
+}

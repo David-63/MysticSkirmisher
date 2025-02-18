@@ -6,6 +6,7 @@
 #include "AbilitySystem/SkirmisherGameplayAbility.h"
 #include "SkirmisherProjectileSpell.generated.h"
 
+class ASkirmisherProjectile;
 /**
  * 
  */
@@ -15,6 +16,8 @@ class MYSTICSKIRMISHER_API USkirmisherProjectileSpell : public USkirmisherGamepl
 	GENERATED_BODY()
 	
 protected:
-virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
+	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<ASkirmisherProjectile> ProjectileClass;
 };
