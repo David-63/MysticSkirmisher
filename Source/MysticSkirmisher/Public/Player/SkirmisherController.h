@@ -59,7 +59,7 @@ private:
 	void CursorTrace();
 	TScriptInterface<IEnemyInterface> LastActor;
 	TScriptInterface<IEnemyInterface> ThisActor;
-
+	FHitResult CursorHit;
 
 
 	/*

@@ -104,22 +104,16 @@ void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
     if (!InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_LMB))
     {
-        if (GetASC())
-        {
-            GetASC()->AbilityInputTagReleased(InputTag);
-        }
+        if (GetASC()) GetASC()->AbilityInputTagReleased(InputTag);
         return;
     }
     if (bTargeting)
     {
-        if (GetASC())
-        {
-            GetASC()->AbilityInputTagHeld(InputTag);
-        }
+        if (GetASC()) GetASC()->AbilityInputTagHeld(InputTag);
     }
     else
     {
-        APawn* controlledPawn = GetPawn();
+        const APawn* controlledPawn = GetPawn();
         if (FollowTime <= ShortPressThreshold && controlledPawn)
         {
             if (UNavigationPath* navPath = UNavigationSystemV1::FindPathToLocationSynchronously(this, controlledPawn->GetActorLocation(), CachedDestination))
@@ -128,7 +122,6 @@ void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
                 for (const FVector& pointLoc : navPath->PathPoints)
                 {
                     Spline->AddSplinePoint(pointLoc, ESplineCoordinateSpace::World);
-                    DrawDebugSphere(GetWorld(), pointLoc, 5.f, 8, FColor::Yellow, false, 2.f);
                 }
                 CachedDestination = navPath->PathPoints[navPath->PathPoints.Num() - 1];
                 bAutoRunning = true;
@@ -142,28 +135,19 @@ void ASkirmisherController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
     if (!InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_LMB))
     {
-        if (GetASC())
-        {
-            GetASC()->AbilityInputTagHeld(InputTag);
-        }
+        if (GetASC()) GetASC()->AbilityInputTagHeld(InputTag);
         return;
     }
 
     if (bTargeting)
     {
-        if (GetASC())
-        {
-            GetASC()->AbilityInputTagHeld(InputTag);
-        }
+        if (GetASC()) GetASC()->AbilityInputTagHeld(InputTag);
     }
     else
     {
         FollowTime += GetWorld()->GetDeltaSeconds();
-        FHitResult hit;
-        if (GetHitResultUnderCursor(ECC_Visibility, false, hit))
-        {
-            CachedDestination = hit.ImpactPoint;
-        }
+        
+        if (CursorHit.bBlockingHit) CachedDestination = CursorHit.ImpactPoint;
 
         if (APawn* controlledPawn = GetPawn())
         {
@@ -185,51 +169,15 @@ USkirmisherAbilitySystemComponent* ASkirmisherController::GetASC()
 
 void ASkirmisherController::CursorTrace()
 {
-    FHitResult cursorHit;
-    GetHitResultUnderCursor(ECC_Visibility, false, cursorHit);
-    if (!cursorHit.bBlockingHit) return;
+    GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
+    if (!CursorHit.bBlockingHit) return;
         
     LastActor = ThisActor;
-    ThisActor = cursorHit.GetActor();
+    ThisActor = CursorHit.GetActor();
 
-    /*
-    Line trace from cursor. There are several scenarios:
-    A. LastActor is null && ThisActor is null
-        - Do nothing.
-    B. LastActor is null && ThisActor is valid
-        - Highlight ThisActor.
-    C. LastActor is valid && ThisActor is null
-        - UnHighlight LastActor.
-    D. Both actor are valid, but LastActor != ThisActor
-        - UnHighlight LastActor, and Highlight ThisActor.
-    E. Both actor are valid, but LastActor != ThisActor
-        - Do nothing.
-    */
-    if (LastActor == nullptr)
+    if (LastActor != ThisActor)
     {
-        if (ThisActor != nullptr)
-        {
-            // Case B
-            ThisActor->HighlightActor();
-        }
-        // Case A
-    }
-    else // LastActor is valid
-    {
-        if (ThisActor == nullptr)
-        {
-            // Case C
-            LastActor->UnHighlightActor();
-        }
-        else
-        {
-            if (ThisActor != LastActor)
-            {
-                // Case D
-                ThisActor->HighlightActor();
-                LastActor->UnHighlightActor();
-            }
-            // Case E
-        }
+        if (LastActor) LastActor->UnHighlightActor();
+        if (ThisActor) ThisActor->HighlightActor();
     }
 }
