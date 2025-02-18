@@ -10,6 +10,9 @@
 #include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 #include "Components/SplineComponent.h"
 #include "SkirmisherGameplayTags.h"
+#include "NavigationSystem.h"
+#include "NavigationPath.h"
+
 
 ASkirmisherController::ASkirmisherController()
 {
@@ -49,7 +52,28 @@ void ASkirmisherController::PlayerTick(float DeltaTime)
 {
     Super::PlayerTick(DeltaTime);
     CursorTrace();
+
+    AutoRun();
 }
+
+void ASkirmisherController::AutoRun()
+{
+    if (!bAutoRunning) return;
+
+    if (APawn* controlledPawn = GetPawn())
+    {
+        const FVector locationOnSpline = Spline->FindLocationClosestToWorldLocation(controlledPawn->GetActorLocation(), ESplineCoordinateSpace::World);
+        const FVector direction = Spline->FindDirectionClosestToWorldLocation(locationOnSpline, ESplineCoordinateSpace::World);
+        controlledPawn->AddMovementInput(direction);
+        const float distanceToDestination = (locationOnSpline - CachedDestination).Length();
+        if (distanceToDestination <= AutoRunAcceptanceRadius)
+        {
+            bAutoRunning = false;
+        }
+    }
+}
+
+
 
 void ASkirmisherController::ActionMove(const FInputActionValue &InputValue)
 {
@@ -78,8 +102,41 @@ void ASkirmisherController::AbilityInputTagPressed(FGameplayTag InputTag)
 }
 void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-    if (GetASC() == nullptr) return;
-    GetASC()->AbilityInputTagReleased(InputTag);    
+    if (!InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_LMB))
+    {
+        if (GetASC())
+        {
+            GetASC()->AbilityInputTagReleased(InputTag);
+        }
+        return;
+    }
+    if (bTargeting)
+    {
+        if (GetASC())
+        {
+            GetASC()->AbilityInputTagHeld(InputTag);
+        }
+    }
+    else
+    {
+        APawn* controlledPawn = GetPawn();
+        if (FollowTime <= ShortPressThreshold && controlledPawn)
+        {
+            if (UNavigationPath* navPath = UNavigationSystemV1::FindPathToLocationSynchronously(this, controlledPawn->GetActorLocation(), CachedDestination))
+            {
+                Spline->ClearSplinePoints();
+                for (const FVector& pointLoc : navPath->PathPoints)
+                {
+                    Spline->AddSplinePoint(pointLoc, ESplineCoordinateSpace::World);
+                    DrawDebugSphere(GetWorld(), pointLoc, 5.f, 8, FColor::Yellow, false, 2.f);
+                }
+                CachedDestination = navPath->PathPoints[navPath->PathPoints.Num() - 1];
+                bAutoRunning = true;
+            }
+        }
+        FollowTime = 0.f;
+        bTargeting = false;
+    }
 }
 void ASkirmisherController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
