@@ -94,7 +94,7 @@ void ASkirmisherController::ActionMove(const FInputActionValue &InputValue)
 
 void ASkirmisherController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-    if (InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_LMB))
+    if (InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_RMB))
     {
         bTargeting = ThisActor ? true : false;
         bAutoRunning = false;
@@ -102,7 +102,7 @@ void ASkirmisherController::AbilityInputTagPressed(FGameplayTag InputTag)
 }
 void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-    if (!InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_LMB))
+    if (!InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_RMB))
     {
         if (GetASC()) GetASC()->AbilityInputTagReleased(InputTag);
         return;
@@ -133,7 +133,7 @@ void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
 }
 void ASkirmisherController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
-    if (!InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_LMB))
+    if (!InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_RMB))
     {
         if (GetASC()) GetASC()->AbilityInputTagHeld(InputTag);
         return;
