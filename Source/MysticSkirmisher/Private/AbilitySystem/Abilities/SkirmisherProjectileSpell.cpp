@@ -9,7 +9,13 @@ void USkirmisherProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandl
 {
     Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 
-    const bool bIsServer = HasAuthority(&ActivationInfo);
+    
+}
+
+void USkirmisherProjectileSpell::SpawnProjectile()
+{
+    
+    const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 
     if (!bIsServer) return;
 
@@ -29,9 +35,5 @@ void USkirmisherProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandl
         );
         
         projectile->FinishSpawning(spawnTransform);
-
     }
-
-    
-    
 }
