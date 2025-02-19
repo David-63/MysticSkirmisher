@@ -45,6 +45,9 @@ void ASkirmisherController::SetupInputComponent()
     USkirmisherInputComponent* skirmisherInputComponent = CastChecked<USkirmisherInputComponent>(InputComponent);
 
     skirmisherInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &ASkirmisherController::ActionMove);
+    skirmisherInputComponent->BindAction(IA_Stand, ETriggerEvent::Started, this, &ASkirmisherController::StandPressed);
+    skirmisherInputComponent->BindAction(IA_Stand, ETriggerEvent::Completed, this, &ASkirmisherController::StandReleased);
+    
     skirmisherInputComponent->BindAbilityActions(InputConfig, this, &ASkirmisherController::AbilityInputTagPressed,&ASkirmisherController::AbilityInputTagReleased,&ASkirmisherController::AbilityInputTagHeld);
 }
 
@@ -89,12 +92,11 @@ void ASkirmisherController::ActionMove(const FInputActionValue &InputValue)
         controllPawn->AddMovementInput(forwardDirection, inputAxisVector.Y);
         controllPawn->AddMovementInput(rightDirection, inputAxisVector.X);
     }
-
 }
 
 void ASkirmisherController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-    if (InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_RMB))
+    if (InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_LMB))
     {
         bTargeting = ThisActor ? true : false;
         bAutoRunning = false;
@@ -102,16 +104,15 @@ void ASkirmisherController::AbilityInputTagPressed(FGameplayTag InputTag)
 }
 void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-    if (!InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_RMB))
+    if (!InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_LMB))
     {
         if (GetASC()) GetASC()->AbilityInputTagReleased(InputTag);
         return;
     }
-    if (bTargeting)
-    {
-        if (GetASC()) GetASC()->AbilityInputTagHeld(InputTag);
-    }
-    else
+
+    if (GetASC()) GetASC()->AbilityInputTagReleased(InputTag);
+    
+    if (!bTargeting && !bStandKeyDown)
     {
         const APawn* controlledPawn = GetPawn();
         if (FollowTime <= ShortPressThreshold && controlledPawn)
@@ -133,13 +134,13 @@ void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
 }
 void ASkirmisherController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
-    if (!InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_RMB))
+    if (!InputTag.MatchesTagExact(FSkirmisherGameplayTags::Get().InputTag_LMB))
     {
         if (GetASC()) GetASC()->AbilityInputTagHeld(InputTag);
         return;
     }
 
-    if (bTargeting)
+    if (bTargeting || bStandKeyDown)
     {
         if (GetASC()) GetASC()->AbilityInputTagHeld(InputTag);
     }

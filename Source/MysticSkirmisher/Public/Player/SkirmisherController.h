@@ -37,10 +37,16 @@ private:
 	*/
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputMappingContext> InputContext;
+	
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> IA_Move;
-
 	void ActionMove(const struct FInputActionValue& InputValue);
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> IA_Stand;
+	void StandPressed() { bStandKeyDown = true; }
+	void StandReleased() { bStandKeyDown = false; }
+	bool bStandKeyDown = false;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<USkirmisherInputConfig> InputConfig;

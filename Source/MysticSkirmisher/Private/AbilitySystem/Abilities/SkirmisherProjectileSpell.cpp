@@ -12,7 +12,7 @@ void USkirmisherProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandl
     
 }
 
-void USkirmisherProjectileSpell::SpawnProjectile()
+void USkirmisherProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation)
 {
     
     const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
@@ -25,8 +25,12 @@ void USkirmisherProjectileSpell::SpawnProjectile()
     if (combatInterface)
     {
         const FVector socketLocation = combatInterface->GetCombatSocketLocation();
+        FRotator rotation = (ProjectileTargetLocation - socketLocation).Rotation();
+        rotation.Pitch = 0.f;
+
         FTransform spawnTransform;
         spawnTransform.SetLocation(socketLocation);
+        spawnTransform.SetRotation(rotation.Quaternion());
 
         ASkirmisherProjectile* projectile = GetWorld()->SpawnActorDeferred<ASkirmisherProjectile>
         (

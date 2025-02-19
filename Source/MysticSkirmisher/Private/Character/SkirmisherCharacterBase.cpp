@@ -4,10 +4,14 @@
 #include "Character/SkirmisherCharacterBase.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
+#include "Components/CapsuleComponent.h"
 
 ASkirmisherCharacterBase::ASkirmisherCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
+
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
