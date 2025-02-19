@@ -56,11 +56,14 @@ private:
 	/*
 		Highlight enemy
 	*/
+private:
 	void CursorTrace();
 	TScriptInterface<IEnemyInterface> LastActor;
 	TScriptInterface<IEnemyInterface> ThisActor;
 	FHitResult CursorHit;
-
+	
+public:
+	FORCEINLINE FHitResult GetCursorHit() { return CursorHit; }
 
 	/*
 		Click to move

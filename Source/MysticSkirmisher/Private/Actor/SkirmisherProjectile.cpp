@@ -19,8 +19,8 @@ ASkirmisherProjectile::ASkirmisherProjectile()
 
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>("ProjectileMovement");
-	ProjectileMovement->InitialSpeed = 800.f;
-	ProjectileMovement->MaxSpeed = 1000.f;
+	ProjectileMovement->InitialSpeed = 1800.f;
+	ProjectileMovement->MaxSpeed = 2000.f;
 	ProjectileMovement->ProjectileGravityScale = 0.f;
 
 }
