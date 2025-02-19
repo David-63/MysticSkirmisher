@@ -7,7 +7,8 @@
 #include "MMC_MaxHealth.generated.h"
 
 /**
- * 
+ * 	최대 체력 계산식
+ * 	다른 GameplayTag 에 존재하는 Attribute에 의해 최대 체력을 계산하는 기능
  */
 UCLASS()
 class MYSTICSKIRMISHER_API UMMC_MaxHealth : public UGameplayModMagnitudeCalculation

@@ -46,8 +46,11 @@ public:
 
 template<class T>
 using TStaticFuncPtr = typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
+
 /**
+ * 	MysticSkirmisher 에서 사용하는 AttributeSet 클래스
  * 
+ * 	Player 가 사용할 Attribute에 메크로함수를 적용하여 외부에서 GetSet을 사용할 수 있음
  */
 UCLASS()
 class MYSTICSKIRMISHER_API USkirmisherAttributeSet : public UAttributeSet

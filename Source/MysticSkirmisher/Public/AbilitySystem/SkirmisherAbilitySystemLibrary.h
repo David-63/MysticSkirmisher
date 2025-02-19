@@ -10,7 +10,7 @@
 class UOverlayWidgetController;
 class UAttributeMenuWidgetController;
 /**
- * 
+ * 	Widget에서 playerController, AbilitySystemComponent, AttributeSet을 전달해주는 static blueprint library
  */
 UCLASS()
 class MYSTICSKIRMISHER_API USkirmisherAbilitySystemLibrary : public UBlueprintFunctionLibrary

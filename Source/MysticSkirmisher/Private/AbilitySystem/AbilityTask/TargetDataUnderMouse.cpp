@@ -3,6 +3,7 @@
 
 #include "AbilitySystem/AbilityTask/TargetDataUnderMouse.h"
 #include "Player/SkirmisherController.h"
+#include "AbilitySystemComponent.h"
 
 
 UTargetDataUnderMouse *UTargetDataUnderMouse::CreateTargetDataUnderMouse(UGameplayAbility *OwningAbility)
@@ -13,10 +14,39 @@ UTargetDataUnderMouse *UTargetDataUnderMouse::CreateTargetDataUnderMouse(UGamepl
 
 void UTargetDataUnderMouse::Activate()
 {
-    ASkirmisherController* pc = Cast<ASkirmisherController>(Ability->GetCurrentActorInfo()->PlayerController);
-    //APlayerController* pc = Ability->GetCurrentActorInfo()->PlayerController.Get();
-    //FHitResult hit;
-    //pc->GetHitResultUnderCursor(ECC_Visibility, false, hit);
+    const bool bIsLocallyControlled = Ability->GetCurrentActorInfo()->IsLocallyControlled();
 
-    ValidData.Broadcast(pc->GetCursorHit().Location);
+    if (bIsLocallyControlled)
+    {
+        SendMouseCursorData();
+    }
+    else
+    {
+        // TODO: We are on the server, so listen for target data.
+
+    }
+
+}
+void UTargetDataUnderMouse::SendMouseCursorData()
+{
+    FScopedPredictionWindow scopedPrediction(AbilitySystemComponent.Get());
+
+    FGameplayAbilityTargetData_SingleTargetHit* data = new FGameplayAbilityTargetData_SingleTargetHit();
+
+    FGameplayAbilityTargetDataHandle dataHandle;
+
+    ASkirmisherController* pc = Cast<ASkirmisherController>(Ability->GetCurrentActorInfo()->PlayerController);
+    data->HitResult = pc->GetCursorHit();
+    dataHandle.Add(data);
+    
+
+    AbilitySystemComponent->ServerSetReplicatedTargetData
+    (
+        GetAbilitySpecHandle(), GetActivationPredictionKey(), dataHandle, FGameplayTag(), AbilitySystemComponent->ScopedPredictionKey
+    );
+
+    if (ShouldBroadcastAbilityTaskDelegates())
+    {
+        ValidData.Broadcast(dataHandle);
+    }
 }
