@@ -100,7 +100,7 @@ void ASkirmisherController::AbilityInputTagPressed(FGameplayTag InputTag)
     {
         bTargeting = ThisActor ? true : false;
         bAutoRunning = false;
-    }  
+    }
 }
 void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
