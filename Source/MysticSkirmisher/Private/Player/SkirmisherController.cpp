@@ -124,7 +124,12 @@ void ASkirmisherController::AbilityInputTagReleased(FGameplayTag InputTag)
                 {
                     Spline->AddSplinePoint(pointLoc, ESplineCoordinateSpace::World);
                 }
-                CachedDestination = navPath->PathPoints[navPath->PathPoints.Num() - 1];
+                
+                if (navPath->PathPoints.Num() > 1)
+                {
+                    CachedDestination = navPath->PathPoints[navPath->PathPoints.Num() - 1];
+                }
+                
                 bAutoRunning = true;
             }
         }

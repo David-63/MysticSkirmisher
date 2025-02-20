@@ -25,7 +25,8 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	
+	virtual void Destroyed() override;
+
 	UFUNCTION()
 	void OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
@@ -34,9 +35,21 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USphereComponent> Sphere;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Assets")
 	TObjectPtr<UNiagaraSystem> ImpactEffect;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category = "Assets")
 	TObjectPtr<USoundBase> ImpactSound;
+
+	bool bBeginOverlap = false;
+
+	UPROPERTY(EditAnywhere, Category = "Assets")
+	TObjectPtr<USoundBase> LoopingSound;
+
+	UPROPERTY();
+	TObjectPtr<UAudioComponent> LoopingSoundComponent;
+
+
+	UPROPERTY(EditDefaultsOnly)
+	float LifeSpan = 2.f;
 };
