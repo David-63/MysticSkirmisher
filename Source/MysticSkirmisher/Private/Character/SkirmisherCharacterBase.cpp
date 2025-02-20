@@ -5,6 +5,8 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "MysticSkirmisher/MysticSkirmisher.h"
+
 
 ASkirmisherCharacterBase::ASkirmisherCharacterBase()
 {
@@ -12,6 +14,8 @@ ASkirmisherCharacterBase::ASkirmisherCharacterBase()
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetMesh()->SetCollisionResponseToChannel(ECC_Projectile, ECR_Overlap);
+	GetMesh()->SetGenerateOverlapEvents(true);
 
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
