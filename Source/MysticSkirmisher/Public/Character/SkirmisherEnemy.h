@@ -5,8 +5,11 @@
 #include "CoreMinimal.h"
 #include "Character/SkirmisherCharacterBase.h"
 #include "Interaction/EnemyInterface.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 #include "SkirmisherEnemy.generated.h"
 
+
+class UWidgetComponent;
 /**
  * 
  */
@@ -31,9 +34,17 @@ public:
 	virtual int32 GetCurrentLevel() override;
 	/* end Combat Interface */
 
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnHealthChanged;
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeChangedSignature OnHealthMaxChanged;
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	int32 Level = 1;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	TObjectPtr<UWidgetComponent> HealthBar;
 
 
 };

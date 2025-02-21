@@ -5,7 +5,8 @@
 #include "MysticSkirmisher/MysticSkirmisher.h"
 #include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 #include "AbilitySystem/SkirmisherAttributeSet.h"
-
+#include "Components/WidgetComponent.h"
+#include "UI/Widget/SkirmisherUserWidget.h"
 
 ASkirmisherEnemy::ASkirmisherEnemy()
 {
@@ -16,12 +17,42 @@ ASkirmisherEnemy::ASkirmisherEnemy()
     AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
     AttributeSet = CreateDefaultSubobject<USkirmisherAttributeSet>("AttributeSet");
+
+    HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBarWidget");
+    HealthBar->SetupAttachment(GetRootComponent());
 }
 
 void ASkirmisherEnemy::BeginPlay()
 {
     Super::BeginPlay();
     InitAbilityActorInfo();
+
+    if (USkirmisherUserWidget* skrimisherUserWidget = Cast<USkirmisherUserWidget>(HealthBar->GetUserWidgetObject()))
+    {
+        skrimisherUserWidget->SetWidgetController(this);
+    }
+
+    if (const USkirmisherAttributeSet* skrimisherAS = Cast<USkirmisherAttributeSet>(AttributeSet))
+    {
+        AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skrimisherAS->GetHealthAttribute()).AddLambda
+        (
+            [this](const FOnAttributeChangeData& Data)
+            {
+                OnHealthChanged.Broadcast(Data.NewValue);
+            }
+        );
+        AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(skrimisherAS->GetHealthMaxAttribute()).AddLambda
+        (
+            [this](const FOnAttributeChangeData& Data)
+            {
+                OnHealthMaxChanged.Broadcast(Data.NewValue);
+            }
+        );
+
+        OnHealthChanged.Broadcast(skrimisherAS->GetHealth());
+        OnHealthMaxChanged.Broadcast(skrimisherAS->GetHealthMax());
+    }
+    
 }
 
 void ASkirmisherEnemy::InitAbilityActorInfo()
