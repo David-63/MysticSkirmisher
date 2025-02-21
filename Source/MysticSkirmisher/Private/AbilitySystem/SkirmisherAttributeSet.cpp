@@ -119,6 +119,7 @@ void USkirmisherAttributeSet::PostGameplayEffectExecute(const FGameplayEffectMod
     if (Data.EvaluatedData.Attribute == GetHealthAttribute())
     {
         SetHealth(FMath::Clamp(GetHealth(), 0.f, GetHealthMax()));
+        UE_LOG(LogTemp, Warning, TEXT("Changed Health on %s, Health: %f"), *props.TargetAvatarActor->GetName(), GetHealth());
     }
     if (Data.EvaluatedData.Attribute == GetManaAttribute())
     {

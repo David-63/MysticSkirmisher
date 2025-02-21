@@ -7,6 +7,7 @@
 #include "SkirmisherProjectileSpell.generated.h"
 
 class ASkirmisherProjectile;
+class UGameplayEffect;
 /**
  * 
  */
@@ -24,4 +25,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<ASkirmisherProjectile> ProjectileClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<UGameplayEffect> DamageEffectClass;
 };

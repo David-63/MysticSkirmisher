@@ -27,8 +27,9 @@ void ASkirmisherEnemy::BeginPlay()
 void ASkirmisherEnemy::InitAbilityActorInfo()
 {
     AbilitySystemComponent->InitAbilityActorInfo(this, this);
-
     Cast<USkirmisherAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
+
+    InitializeDefaultAttributes();
 }
 void ASkirmisherEnemy::HighlightActor()
 {

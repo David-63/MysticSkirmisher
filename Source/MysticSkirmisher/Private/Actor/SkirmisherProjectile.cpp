@@ -8,6 +8,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
 #include "MysticSkirmisher/MysticSkirmisher.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 
 ASkirmisherProjectile::ASkirmisherProjectile()
 {
@@ -59,6 +61,11 @@ void ASkirmisherProjectile::OnSphereBeginOverlap(UPrimitiveComponent* Overlapped
 
 	if (HasAuthority())
 	{
+		if (UAbilitySystemComponent* targetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(OtherActor))
+		{
+			targetASC->ApplyGameplayEffectSpecToSelf(*DamageEffectSpecHandle.Data.Get());
+		}
+
 		Destroy();
 	}
 	else

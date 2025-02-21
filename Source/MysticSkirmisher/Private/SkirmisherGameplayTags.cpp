@@ -50,10 +50,8 @@ void FSkirmisherGameplayTags::InitializeNativeGameplayTags()
     /*
         Vital Attributes
     */
-    GameplayTags.Attributes_Vital_Health = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Vital.Health")
-    , FString("Amount of damage a player can take before death"));
-    GameplayTags.Attributes_Vital_Mana = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Vital.Mana")
-    , FString("A resource used to cast spells"));
+    //GameplayTags.Attributes_Vital_Health = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Vital.Health"), FString("Amount of damage a player can take before death"));
+    //GameplayTags.Attributes_Vital_Mana = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Vital.Mana"), FString("A resource used to cast spells"));
 
     /*
         Input Tags

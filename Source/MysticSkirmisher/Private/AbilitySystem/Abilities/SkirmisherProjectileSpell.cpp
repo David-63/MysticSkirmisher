@@ -4,6 +4,9 @@
 #include "AbilitySystem/Abilities/SkirmisherProjectileSpell.h"
 #include "Actor/SkirmisherProjectile.h"
 #include "Interaction/CombatInterface.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
+
 
 void USkirmisherProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo * ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData * TriggerEventData)
 {
@@ -38,6 +41,10 @@ void USkirmisherProjectileSpell::SpawnProjectile(const FVector& ProjectileTarget
             , Cast<APawn>(GetOwningActorFromActorInfo()), ESpawnActorCollisionHandlingMethod::AlwaysSpawn
         );
         
+        const UAbilitySystemComponent* sourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
+        const FGameplayEffectSpecHandle specHandle = sourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), sourceASC->MakeEffectContext());
+        projectile->DamageEffectSpecHandle = specHandle;
+
         projectile->FinishSpawning(spawnTransform);
     }
 }
