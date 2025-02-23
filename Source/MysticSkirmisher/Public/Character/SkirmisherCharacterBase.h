@@ -27,6 +27,7 @@ protected:
 
 	virtual void InitAbilityActorInfo() {}
 
+protected:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 
@@ -53,6 +54,7 @@ protected:
     void InitializeDefaultAttributes() const;
 
 	void AddCharacterAbilities();
+	
 private:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbiliities;

@@ -7,10 +7,18 @@
 #include "AbilitySystem/SkirmisherAttributeSet.h"
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/SkirmisherUserWidget.h"
+#include "MysticSkirmisher/MysticSkirmisher.h"
+#include "Components/SphereComponent.h"
 
 ASkirmisherEnemy::ASkirmisherEnemy()
 {
     GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+
+
+    SenseAreaComponent = CreateDefaultSubobject<USphereComponent>("SenseArea");
+	SenseAreaComponent->SetCollisionResponseToAllChannels(ECR_Ignore);
+	SenseAreaComponent->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+    SenseAreaComponent->SetupAttachment(GetRootComponent());
 
     AbilitySystemComponent = CreateDefaultSubobject<USkirmisherAbilitySystemComponent>("AbilitySystemComponent");
     AbilitySystemComponent->SetIsReplicated(true);

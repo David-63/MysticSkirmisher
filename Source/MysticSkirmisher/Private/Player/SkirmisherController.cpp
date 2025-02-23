@@ -12,7 +12,7 @@
 #include "SkirmisherGameplayTags.h"
 #include "NavigationSystem.h"
 #include "NavigationPath.h"
-
+#include "MysticSkirmisher/MysticSkirmisher.h"
 
 ASkirmisherController::ASkirmisherController()
 {
@@ -177,7 +177,7 @@ void ASkirmisherController::CursorTrace()
 {
     GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
     if (!CursorHit.bBlockingHit) return;
-        
+
     LastActor = ThisActor;
     ThisActor = CursorHit.GetActor();
 

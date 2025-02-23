@@ -10,6 +10,7 @@
 
 
 class UWidgetComponent;
+class USphereComponent;
 /**
  * 
  */
@@ -46,5 +47,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UWidgetComponent> HealthBar;
 
+	private:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<USphereComponent> SenseAreaComponent;
 
 };
