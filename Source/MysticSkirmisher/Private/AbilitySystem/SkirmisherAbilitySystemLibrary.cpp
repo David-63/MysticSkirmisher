@@ -6,6 +6,8 @@
 #include "UI/HUD/SkirmisherHUD.h"
 #include "UI/WidgetController/SkirmisherWidgetController.h"
 #include "Player/SkirmisherState.h"
+#include "Game/SkirmisherGameModeBase.h"
+#include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 
 UOverlayWidgetController* USkirmisherAbilitySystemLibrary::GetOverlayWidgetController(const UObject* WorldContextObject)
 {    
@@ -42,4 +44,33 @@ UAttributeMenuWidgetController* USkirmisherAbilitySystemLibrary::GetAttributeMen
     }
 
     return nullptr;
+}
+
+void USkirmisherAbilitySystemLibrary::InitializeDefaultAttributes(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level, UAbilitySystemComponent* ASC)
+{
+    ASkirmisherGameModeBase* gameMode = Cast<ASkirmisherGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));
+    if (gameMode == nullptr) return;
+
+    AActor* avatarActor = ASC->GetAvatarActor();
+
+    UCharacterClassInfo* characterClassInfo = gameMode->CharacterClassInfo;
+    FCharacterClassDefaultInfo classDefaultInfo = characterClassInfo->GetClassDefaultInfo(CharacterClass);
+
+
+    FGameplayEffectContextHandle primaryAttributesContextHandle = ASC->MakeEffectContext();
+    primaryAttributesContextHandle.AddSourceObject(avatarActor);
+    const FGameplayEffectSpecHandle primaryAttributesSpecHandle = ASC->MakeOutgoingSpec(classDefaultInfo.PrimaryAttributes, Level, primaryAttributesContextHandle);
+    ASC->ApplyGameplayEffectSpecToSelf(*primaryAttributesSpecHandle.Data.Get());
+
+
+    FGameplayEffectContextHandle secondaryAttributeContextHandle = ASC->MakeEffectContext();
+    secondaryAttributeContextHandle.AddSourceObject(avatarActor);
+    const FGameplayEffectSpecHandle secondaryAttributesSpecHandle = ASC->MakeOutgoingSpec(characterClassInfo->SecondaryAttributes, Level, secondaryAttributeContextHandle);
+    ASC->ApplyGameplayEffectSpecToSelf(*secondaryAttributesSpecHandle.Data.Get());
+
+
+    FGameplayEffectContextHandle vitalAttributeContextHandle = ASC->MakeEffectContext();
+    vitalAttributeContextHandle.AddSourceObject(avatarActor);
+    const FGameplayEffectSpecHandle vitalAttributesSpecHandle = ASC->MakeOutgoingSpec(characterClassInfo->VitalAttributes, Level, vitalAttributeContextHandle);
+    ASC->ApplyGameplayEffectSpecToSelf(*vitalAttributesSpecHandle.Data.Get());
 }

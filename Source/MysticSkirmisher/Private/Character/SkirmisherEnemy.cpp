@@ -3,8 +3,9 @@
 
 #include "Character/SkirmisherEnemy.h"
 #include "MysticSkirmisher/MysticSkirmisher.h"
-#include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
 #include "AbilitySystem/SkirmisherAttributeSet.h"
+#include "AbilitySystem/SkirmisherAbilitySystemComponent.h"
+#include "AbilitySystem/SkirmisherAbilitySystemLibrary.h"
 #include "Components/WidgetComponent.h"
 #include "UI/Widget/SkirmisherUserWidget.h"
 #include "MysticSkirmisher/MysticSkirmisher.h"
@@ -59,8 +60,7 @@ void ASkirmisherEnemy::BeginPlay()
 
         OnHealthChanged.Broadcast(skrimisherAS->GetHealth());
         OnHealthMaxChanged.Broadcast(skrimisherAS->GetHealthMax());
-    }
-    
+    }    
 }
 
 void ASkirmisherEnemy::InitAbilityActorInfo()
@@ -81,10 +81,16 @@ void ASkirmisherEnemy::HighlightActor()
 void ASkirmisherEnemy::UnHighlightActor()
 {
     GetMesh()->SetRenderCustomDepth(false);
-    Weapon->SetRenderCustomDepth(false);    
+    Weapon->SetRenderCustomDepth(false);
 }
 
 int32 ASkirmisherEnemy::GetCurrentLevel()
 {
     return Level;
+}
+
+void ASkirmisherEnemy::InitializeDefaultAttributes() const
+{
+    USkirmisherAbilitySystemLibrary::InitializeDefaultAttributes(this, CharacterClass, Level, GetAbilitySystemComponent());
+
 }
