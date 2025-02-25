@@ -45,6 +45,8 @@ public:
 	FGameplayTag InputTag_4;
 
 
+	FGameplayTag Damage;
+
 private:
 	static FSkirmisherGameplayTags GameplayTags;
 };

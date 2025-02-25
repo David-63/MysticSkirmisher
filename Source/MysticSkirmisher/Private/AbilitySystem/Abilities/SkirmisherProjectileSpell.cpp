@@ -6,6 +6,7 @@
 #include "Interaction/CombatInterface.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
+#include "SkirmisherGameplayTags.h"
 
 
 void USkirmisherProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo * ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData * TriggerEventData)
@@ -43,6 +44,10 @@ void USkirmisherProjectileSpell::SpawnProjectile(const FVector& ProjectileTarget
         
         const UAbilitySystemComponent* sourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
         const FGameplayEffectSpecHandle specHandle = sourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), sourceASC->MakeEffectContext());
+
+        FSkirmisherGameplayTags gameplayTags = FSkirmisherGameplayTags::Get();
+        UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(specHandle, gameplayTags.Damage, 10.f);
+
         projectile->DamageEffectSpecHandle = specHandle;
 
         projectile->FinishSpawning(spawnTransform);
