@@ -76,15 +76,21 @@ public:
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& PrevHealth) const;
 
-	
-
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Mana, Category = "Vital Attributes")
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, Mana);
 	UFUNCTION()
 	void OnRep_Mana(const FGameplayAttributeData& PrevMana) const;
 
-	
+
+
+	/*
+		Meta Attributes
+	*/
+	UPROPERTY(BlueprintReadOnly, Category = "Meta Attributes")
+	FGameplayAttributeData IncomingDamage;
+	ATTRIBUTE_ACCESSORS(USkirmisherAttributeSet, IncomingDamage);
+
 
 	
 	/*

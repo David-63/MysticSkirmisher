@@ -118,12 +118,26 @@ void USkirmisherAttributeSet::PostGameplayEffectExecute(const FGameplayEffectMod
     
     if (Data.EvaluatedData.Attribute == GetHealthAttribute())
     {
-        SetHealth(FMath::Clamp(GetHealth(), 0.f, GetHealthMax()));
-        UE_LOG(LogTemp, Warning, TEXT("Changed Health on %s, Health: %f"), *props.TargetAvatarActor->GetName(), GetHealth());
+        SetHealth(FMath::Clamp(GetHealth(), 0.f, GetHealthMax()));    
     }
+
     if (Data.EvaluatedData.Attribute == GetManaAttribute())
     {
         SetMana(FMath::Clamp(GetMana(), 0.f, GetManaMax()));
+    }
+
+    if (Data.EvaluatedData.Attribute == GetIncomingDamageAttribute())
+    {
+        const float localIncomingDamage = GetIncomingDamage();
+        SetIncomingDamage(0.f);
+        if (localIncomingDamage > 0.f)
+        {
+            const float nextHealth = GetHealth() - localIncomingDamage;
+            SetHealth(FMath::Clamp(nextHealth, 0.f, GetHealthMax()));
+
+            const bool bFatal = nextHealth <= 0.f;
+
+        }
     }
 }
 
