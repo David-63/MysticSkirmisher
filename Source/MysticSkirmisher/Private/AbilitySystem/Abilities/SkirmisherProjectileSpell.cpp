@@ -17,8 +17,7 @@ void USkirmisherProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandl
 }
 
 void USkirmisherProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation)
-{
-    
+{    
     const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 
     if (!bIsServer) return;
@@ -46,8 +45,10 @@ void USkirmisherProjectileSpell::SpawnProjectile(const FVector& ProjectileTarget
         const FGameplayEffectSpecHandle specHandle = sourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), sourceASC->MakeEffectContext());
 
         FSkirmisherGameplayTags gameplayTags = FSkirmisherGameplayTags::Get();
-        UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(specHandle, gameplayTags.Damage, 10.f);
+        const float scaledDamage = Damage.GetValueAtLevel(GetAbilityLevel());
+        GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, FString::Printf(TEXT("Bolt Damage: %f"), scaledDamage));
 
+        UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(specHandle, gameplayTags.Damage, scaledDamage);
         projectile->DamageEffectSpecHandle = specHandle;
 
         projectile->FinishSpawning(spawnTransform);
